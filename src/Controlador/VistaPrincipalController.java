@@ -25,7 +25,7 @@ public class VistaPrincipalController {
 
     @FXML
     void salirJuego(ActionEvent event) {
-
+    	this.stage.close();
     }
 
     @FXML
