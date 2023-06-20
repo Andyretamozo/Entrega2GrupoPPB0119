@@ -43,9 +43,9 @@
             <Image url="@../../Recursos/titulo.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="122.0" fitWidth="186.0" layoutX="1157.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="122.0" fitWidth="210.0" layoutX="24.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../Recursos/logo1.png" />
+            <Image url="@../../Recursos/logo5.png" />
          </image>
       </ImageView>
    </children>

@@ -35,11 +35,6 @@
             <Image url="@../../Recursos/titulo.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="122.0" fitWidth="186.0" layoutX="1167.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../Recursos/logo1.png" />
-         </image>
-      </ImageView>
       <Button fx:id="btnJuegoNuevo" layoutX="708.0" layoutY="682.0" mnemonicParsing="false" prefHeight="77.0" prefWidth="270.0" style="-fx-background-color: D9D9D9;" text="Volver a jugar" textFill="#064a8f">
          <font>
             <Font size="36.0" />
@@ -48,5 +43,10 @@
             <DropShadow />
          </effect>
       </Button>
+      <ImageView fitHeight="122.0" fitWidth="210.0" layoutX="24.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Recursos/logo5.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

@@ -26,6 +26,7 @@ public class VistaBienvenidaController {
     	Scene scene = new Scene(root);
     	Bienve.setScene(scene);
       	VistaNivel1Controller controller = loader.getController();
+		Bienve.setTitle("Matemax: calcula y combina");
 		controller.setStage(Bienve);
     	//controller.init(txtNombre.getText(), stage2, this);
     	Bienve.show();
