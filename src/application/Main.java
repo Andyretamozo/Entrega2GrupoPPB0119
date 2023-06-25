@@ -8,9 +8,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 
-//https://www.youtube.com/watch?v=I04VACXbYbA
+
+
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws IOException {

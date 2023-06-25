@@ -25,11 +25,6 @@
             <DropShadow />
          </effect>
       </Button>
-      <Label fx:id="nombreBienvenido" alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="294.0" layoutY="456.0" prefHeight="91.0" prefWidth="681.0" textFill="WHITE">
-         <font>
-            <Font name="Script MT Bold" size="64.0" />
-         </font>
-      </Label>
       <Label layoutX="491.0" layoutY="359.0" text="Bienvenido" textFill="WHITE">
          <font>
             <Font name="Monotype Corsiva" size="72.0" />
@@ -45,5 +40,11 @@
             <Image url="@../../Recursos/logo5.png" />
          </image>
       </ImageView>
+      <Label fx:id="nombreBienvenido" alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="294.0" layoutY="456.0" prefHeight="91.0" prefWidth="681.0" textFill="WHITE">
+         <font>
+            <Font name="Script MT Bold" size="64.0" />
+         </font>
+      </Label>
+      <Label fx:id="labEdad" layoutX="611.0" layoutY="578.0" opacity="0.0" />
    </children>
 </AnchorPane>
