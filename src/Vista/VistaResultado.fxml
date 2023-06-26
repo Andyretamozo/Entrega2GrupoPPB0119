@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.GaussianBlur?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: F17300;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.VistaResultadoController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1e25f724" height="437.0" layoutX="250.0" layoutY="207.0" opacity="0.29" stroke="BLACK" strokeType="INSIDE" width="781.0">
+         <effect>
+            <GaussianBlur />
+         </effect>
+      </Rectangle>
+      <Button fx:id="btnInicio" layoutX="306.0" layoutY="682.0" mnemonicParsing="false" prefHeight="77.0" prefWidth="270.0" style="-fx-background-color: D9D9D9;" text="Inicio" textFill="#064a8f">
+         <font>
+            <Font size="36.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Button>
+      <Label layoutX="417.0" layoutY="212.0" text="Top 5 puntuacion" textFill="WHITE">
+         <font>
+            <Font name="Monotype Corsiva" size="72.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="171.0" fitWidth="1092.0" layoutX="126.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Recursos/titulo.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="122.0" fitWidth="186.0" layoutX="1167.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Recursos/logo1.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btnJuegoNuevo" layoutX="708.0" layoutY="682.0" mnemonicParsing="false" prefHeight="77.0" prefWidth="270.0" style="-fx-background-color: D9D9D9;" text="Volver a jugar" textFill="#064a8f">
+         <font>
+            <Font size="36.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Button>
+   </children>
+</AnchorPane>

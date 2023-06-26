@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.GaussianBlur?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: F17300; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.VistaPrincipalController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1e25f724" height="291.0" layoutX="250.0" layoutY="309.0" opacity="0.29" stroke="BLACK" strokeType="INSIDE" width="781.0">
+         <effect>
+            <GaussianBlur />
+         </effect>
+      </Rectangle>
+      <Button fx:id="bttonRegistro1" layoutX="282.0" layoutY="682.0" mnemonicParsing="false" onAction="#showVistaRegistro" prefHeight="50.0" prefWidth="190.0" style="-fx-background-color: D9D9D9;" text="Registro" textFill="#064a8f">
+         <font>
+            <Font size="36.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Button>
+      <Button fx:id="bttonsalir" layoutX="807.0" layoutY="682.0" mnemonicParsing="false" onAction="#salirJuego" prefHeight="50.0" prefWidth="190.0" style="-fx-background-color: D9D9D9;" text="Salir" textFill="#064a8f">
+         <font>
+            <Font size="36.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Button>
+      <Text fx:id="txtname" fill="WHITE" layoutX="288.0" layoutY="407.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Con esta aplicacion tienes el reto de aprender matematicas de manera divertida, disfrutala." wrappingWidth="706.916748046875">
+         <font>
+            <Font name="Bell MT" size="40.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="171.0" fitWidth="1092.0" layoutX="130.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Recursos/titulo.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="122.0" fitWidth="186.0" layoutX="1157.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Recursos/logo1.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
