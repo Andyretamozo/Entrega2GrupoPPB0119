@@ -1,5 +1,6 @@
 package Controlador;
 
+import application.Cartas;
 import application.Operacion;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,7 +14,17 @@ import javafx.stage.Stage;
 
 public class VistaNivel1Controller {
  
+	
+
 	public VistaNivel1Controller() {
+		
+	}
+	
+
+	
+    public static void main(String[] args) {
+		
+
 		
 	}
 
@@ -129,10 +140,17 @@ public class VistaNivel1Controller {
 	
 	    @FXML
 	    private Label totAcumulado;
-	
+	    
+	    private Cartas actCarta = new Cartas();
+	        	
 	    @FXML
 	    void Fil1Carta1(MouseEvent event) {
+
     		ptoFil1Carta1.setVisible(false);
+    		ptoFil1Carta1.setDisable(false);
+    		actCarta.comparar();    		
+    		Cartas.carta[0].setVal(10);
+    		
 	    }
 	
 	    @FXML
@@ -167,12 +185,13 @@ public class VistaNivel1Controller {
 	
 	    @FXML
 	    void Fil2Carta4(MouseEvent event) {
-    		ptoFil2Carta4.setVisible(false);
+    		ptoFil2Carta4.setVisible(false);	
+
 	    }
 	
 	    @FXML
 	    void btnAvanzar2(ActionEvent event) {
-	
+	    	
 	    }
 	    
 	    	    	    		
@@ -182,9 +201,7 @@ public class VistaNivel1Controller {
 		this.nivelActual1 = bienve;
 		this.obtUsuario.setText(text);
 		this.labEdadn1.setText(text2);
-		
-		
-		
+
 		
 		//valores operacion carta 1 fila 1
         int[] resultado = Operacion.suma();
