@@ -4,6 +4,7 @@ module Entrega2GrupoPPB0119 {
 	requires javafx.graphics;
 	requires javafx.base;
 	requires java.desktop;
+	requires java.sql;
 	
 	opens Controlador to javafx.fxml;
 	

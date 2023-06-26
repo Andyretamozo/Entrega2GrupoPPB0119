@@ -35,6 +35,7 @@ public class VistaPrincipalController {
     	VistaRegistroController controller = loader.getController();
     	Scene scene = new Scene(root);
     	Stage stage = new Stage();
+		stage.setTitle("Matemax: calcula y combina");
     	stage.setScene(scene);
 		controller.setStage(stage);
     	stage.show();
