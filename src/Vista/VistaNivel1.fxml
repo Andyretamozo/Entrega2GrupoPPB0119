@@ -124,24 +124,24 @@
             <Font name="Kristen ITC" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="totAcumulado" layoutX="1142.0" layoutY="72.0" prefHeight="32.0" prefWidth="51.0" textFill="WHITE">
+      <Label fx:id="totAcumulado" layoutX="1142.0" layoutY="72.0" prefHeight="32.0" prefWidth="51.0" text="0" textFill="WHITE">
          <font>
             <Font name="Jokerman" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="puntosNivel1" layoutX="1145.0" layoutY="111.0" textFill="WHITE">
+      <Label fx:id="puntosNivel1" layoutX="1145.0" layoutY="111.0" text="100" textFill="WHITE">
          <font>
             <Font name="Jokerman" size="18.0" />
          </font>
       </Label>
-      <VBox layoutX="206.0" layoutY="205.0" prefHeight="196.0" prefWidth="153.0" spacing="25.0" style="-fx-background-color: #a3a5ff; -fx-background-radius: 10;">
+      <VBox fx:id="vBox1" layoutX="206.0" layoutY="205.0" prefHeight="196.0" prefWidth="153.0" spacing="25.0" style="-fx-background-color: #a3a5ff; -fx-background-radius: 10;">
          <children>
             <Label fx:id="labOpeC1" prefHeight="27.0" prefWidth="167.0" text="Operacion" textFill="WHITE">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>
             </Label>
-            <RadioButton fx:id="car1btn1" mnemonicParsing="false" prefHeight="19.0" prefWidth="144.0" textFill="WHITE">
+            <RadioButton fx:id="car1btn1" mnemonicParsing="false" prefHeight="19.0" prefWidth="144.0" selected="true" textFill="WHITE">
                <font>
                   <Font name="Consolas Bold Italic" size="14.0" />
                </font>
@@ -176,7 +176,7 @@
             <Image url="@../../Recursos/envCarta.png" />
          </image>
       </ImageView>
-      <VBox layoutX="442.0" layoutY="205.0" prefHeight="196.0" prefWidth="153.0" spacing="25.0" style="-fx-background-color: #a3a5ff; -fx-background-radius: 10;">
+      <VBox fx:id="vBox2" layoutX="442.0" layoutY="205.0" prefHeight="196.0" prefWidth="153.0" spacing="25.0" style="-fx-background-color: #a3a5ff; -fx-background-radius: 10;">
          <children>
             <Label fx:id="labOpeC2" prefHeight="27.0" prefWidth="137.0" text="Operacion" textFill="WHITE">
                <font>
@@ -191,7 +191,7 @@
                   <ToggleGroup fx:id="btnsF1C2" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="car2btn2" mnemonicParsing="false" prefWidth="136.0" textFill="WHITE" toggleGroup="$btnsF1C2">
+            <RadioButton fx:id="car2btn2" mnemonicParsing="false" prefWidth="136.0" selected="true" textFill="WHITE" toggleGroup="$btnsF1C2">
                <font>
                   <Font name="Consolas Bold Italic" size="14.0" />
                </font>
@@ -218,7 +218,7 @@
             <Image url="@../../Recursos/envCarta.png" />
          </image>
       </ImageView>
-      <VBox layoutX="678.0" layoutY="205.0" prefHeight="196.0" prefWidth="153.0" spacing="25.0" style="-fx-background-color: #a3a5ff; -fx-background-radius: 10;">
+      <VBox fx:id="vBox3" layoutX="678.0" layoutY="205.0" prefHeight="196.0" prefWidth="153.0" spacing="25.0" style="-fx-background-color: #a3a5ff; -fx-background-radius: 10;">
          <children>
             <Label fx:id="labOpeC3" prefHeight="27.0" prefWidth="137.0" text="Operacion" textFill="WHITE">
                <font>
@@ -238,7 +238,7 @@
                   <Font name="Consolas Bold Italic" size="14.0" />
                </font>
             </RadioButton>
-            <RadioButton fx:id="car3btn3" mnemonicParsing="false" prefWidth="136.0" textFill="WHITE" toggleGroup="$btnsF1C3">
+            <RadioButton fx:id="car3btn3" mnemonicParsing="false" prefWidth="136.0" selected="true" textFill="WHITE" toggleGroup="$btnsF1C3">
                <font>
                   <Font name="Consolas Bold Italic" size="14.0" />
                </font>
@@ -260,14 +260,14 @@
             <Image url="@../../Recursos/envCarta.png" />
          </image>
       </ImageView>
-      <VBox layoutX="914.0" layoutY="205.0" prefHeight="196.0" prefWidth="153.0" spacing="25.0" style="-fx-background-color: #a3a5ff; -fx-background-radius: 10;">
+      <VBox fx:id="vBox4" layoutX="914.0" layoutY="205.0" prefHeight="196.0" prefWidth="153.0" spacing="25.0" style="-fx-background-color: #a3a5ff; -fx-background-radius: 10;">
          <children>
             <Label fx:id="labOpeC4" prefHeight="27.0" prefWidth="137.0" text="Operacion" textFill="WHITE">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>
             </Label>
-            <RadioButton fx:id="car4btn1" mnemonicParsing="false" prefWidth="136.0" textFill="WHITE">
+            <RadioButton fx:id="car4btn1" mnemonicParsing="false" prefWidth="136.0" selected="true" textFill="WHITE">
                <font>
                   <Font name="Consolas Bold Italic" size="14.0" />
                </font>
@@ -302,7 +302,7 @@
             <Image url="@../../Recursos/envCarta.png" />
          </image>
       </ImageView>
-      <VBox layoutX="206.0" layoutY="433.0" prefHeight="196.0" prefWidth="153.0" spacing="40.0" style="-fx-background-color: #a3a5ff; -fx-background-radius: 10;">
+      <VBox fx:id="vBox5" layoutX="206.0" layoutY="433.0" prefHeight="196.0" prefWidth="153.0" spacing="40.0" style="-fx-background-color: #a3a5ff; -fx-background-radius: 10;">
          <children>
             <Label alignment="CENTER" prefHeight="27.0" prefWidth="159.0" text="Respuesta" textFill="WHITE">
                <font>
@@ -334,7 +334,7 @@
             <Image url="@../../Recursos/envCarta.png" />
          </image>
       </ImageView>
-      <VBox layoutX="442.0" layoutY="433.0" prefHeight="196.0" prefWidth="153.0" spacing="40.0" style="-fx-background-color: #a3a5ff; -fx-background-radius: 10;">
+      <VBox fx:id="vBox6" layoutX="442.0" layoutY="433.0" prefHeight="196.0" prefWidth="153.0" spacing="40.0" style="-fx-background-color: #a3a5ff; -fx-background-radius: 10;">
          <children>
             <Label alignment="CENTER" prefHeight="27.0" prefWidth="168.0" text="Respuesta" textFill="WHITE">
                <font>
@@ -363,7 +363,7 @@
             <Image url="@../../Recursos/envCarta.png" />
          </image>
       </ImageView>
-      <VBox layoutX="678.0" layoutY="433.0" prefHeight="196.0" prefWidth="153.0" spacing="40.0" style="-fx-background-color: #a3a5ff; -fx-background-radius: 10;">
+      <VBox fx:id="vBox7" layoutX="678.0" layoutY="433.0" prefHeight="196.0" prefWidth="153.0" spacing="40.0" style="-fx-background-color: #a3a5ff; -fx-background-radius: 10;">
          <children>
             <Label alignment="CENTER" prefHeight="27.0" prefWidth="167.0" text="Respuesta" textFill="WHITE">
                <font>
@@ -392,7 +392,7 @@
             <Image url="@../../Recursos/envCarta.png" />
          </image>
       </ImageView>
-      <VBox layoutX="914.0" layoutY="433.0" prefHeight="196.0" prefWidth="153.0" spacing="40.0" style="-fx-background-color: #a3a5ff; -fx-background-radius: 10;">
+      <VBox fx:id="vBox8" layoutX="914.0" layoutY="433.0" prefHeight="196.0" prefWidth="153.0" spacing="40.0" style="-fx-background-color: #a3a5ff; -fx-background-radius: 10;">
          <children>
             <Label alignment="CENTER" prefHeight="27.0" prefWidth="159.0" text="Respuesta" textFill="WHITE">
                <font>

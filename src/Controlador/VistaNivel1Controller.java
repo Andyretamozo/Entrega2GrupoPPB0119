@@ -1,36 +1,32 @@
 package Controlador;
 
+import java.lang.reflect.Field;
+
 import application.Cartas;
 import application.Operacion;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class VistaNivel1Controller {
  
-	
-
-	public VistaNivel1Controller() {
-		
-	}
-	
-
-	
-    public static void main(String[] args) {
-		
-
-		
-	}
 
 		Stage nivelActual1;
-	    
-	    @FXML
+		
+		//Puntos de nivel 1
+		int puntosNiv1 = 100;
+
+		@FXML
 	    private Button avanzar;
 	
 	    @FXML
@@ -80,6 +76,30 @@ public class VistaNivel1Controller {
 
 	    @FXML
 	    private RadioButton car4btn3;
+	    
+	    @FXML
+	    private VBox vBox1;
+
+	    @FXML
+	    private VBox vBox2;
+
+	    @FXML
+	    private VBox vBox3;
+
+	    @FXML
+	    private VBox vBox4;
+
+	    @FXML
+	    private VBox vBox5;
+
+	    @FXML
+	    private VBox vBox6;
+
+	    @FXML
+	    private VBox vBox7;
+
+	    @FXML
+	    private VBox vBox8;
 
 	    @FXML
 	    private Label labOpeC1;
@@ -141,50 +161,364 @@ public class VistaNivel1Controller {
 	    @FXML
 	    private Label totAcumulado;
 	    
+	    //Se crea instancia de clase Cartas
 	    private Cartas actCarta = new Cartas();
+
+	    
+	    //se generan valores aleatorios para las operaciones fila 1
+        
+	    int[] resultado = Operacion.suma();
+        int [] aleatorio = Operacion.aleatorio();
+        
+        int[] resultado1 = Operacion.suma();
+        int [] aleatorio1 = Operacion.aleatorio();
+        
+        int[] resultado2 = Operacion.suma();
+        int [] aleatorio2 = Operacion.aleatorio();
+        
+        int[] resultado3 = Operacion.suma();
+        int [] aleatorio3 = Operacion.aleatorio();
+        
+        //metodo para asignar los valores de los resultados a las cartas fila 2
+        public static int[] obtenerResCartas(int []resCartas) {
+        int[] aleaCartas = Operacion.aleatorio2();
+        return aleaCartas;
+        }
+        
+        int resul = resultado[4];
+        int resul1 = resultado1[4];
+        int resul2 = resultado2[4];
+        int resul3 = resultado3[4];
+        int[] resCartas = {resul, resul1, resul2, resul3};	 //este array se usa con el metodo obtenerRescartas
+        int[] aleaCartas = obtenerResCartas(resCartas) ;
 	        	
 	    @FXML
 	    void Fil1Carta1(MouseEvent event) {
+	    	
+	    	//Se invoca metodo Crear cartas con la instancia creada de la clase Cartas
+    		actCarta.crearCartas(); 
+    		
+    		//Valor de la carta
+	        int resul = resultado [4];
 
-    		ptoFil1Carta1.setVisible(false);
-    		ptoFil1Carta1.setDisable(false);
-    		actCarta.comparar();    		
-    		Cartas.carta[0].setVal(10);
+	        //Se almacenan datos de las cartas en el array
+	        
+    		Cartas.carta[0].setVal(resul); // valor es resul
+    		Cartas.carta[0].setTemp(1);
+            Cartas.desbCarta(0);
+            
+    		boolean cv1 = Cartas.carta[0].isVis();
+    		boolean cb1 = Cartas.carta[0].isBloq();
+
+    		ptoFil1Carta1.setVisible(cv1);
+    		ptoFil1Carta1.setDisable(cb1);
+    		//ptoFil1Carta3.setOpacity(opac);
+  		
+    		//Se bloquean cartas diferentes a actual
+            for (int i = 0; i < Cartas.carta.length-4; i++) {
+                if (Cartas.carta[i].getTemp() == 0) {
+
+                    String cartaVariableName = "ptoFil1Carta" + (i + 1);
+
+                    try {
+                        Field field = getClass().getDeclaredField(cartaVariableName);
+                        field.setAccessible(true);
+                        Node cartaNode = (Node) field.get(this);
+                        cartaNode.setDisable(true);
+                    } catch (NoSuchFieldException | IllegalAccessException e) {
+                        System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName);
+                        e.printStackTrace();
+                    }
+                }
+            }//fin for
+
+	    }
+	    
+
+	
+	    @FXML
+	    void Fil1Carta2(MouseEvent event) {
+    		
+	    	//Se invoca metodo Crear cartas con la instancia creada de la clase Cartas
+    		actCarta.crearCartas(); 
+    		//Valor de la carta
+	        int resul1 = resultado [4];
+
+	        //Se almacenan datos de las cartas en el array
+	        
+    		Cartas.carta[1].setVal(resul1);
+    		Cartas.carta[1].setTemp(1);
+            Cartas.desbCarta(0);
+            
+    		boolean cv1 = Cartas.carta[1].isVis();
+    		boolean cb1 = Cartas.carta[1].isBloq();
+
+    		ptoFil1Carta2.setVisible(cv1);
+    		ptoFil1Carta2.setDisable(cb1);
+    		//ptoFil1Carta2.setOpacity(opac);
+  		
+    		//Se bloquean cartas diferentes a actual
+            for (int i = 0; i < Cartas.carta.length-4; i++) {
+                if (Cartas.carta[i].getTemp() == 0) {
+
+                    String cartaVariableName = "ptoFil1Carta" + (i + 1);
+
+                    try {
+                        Field field = getClass().getDeclaredField(cartaVariableName);
+                        field.setAccessible(true);
+                        Node cartaNode = (Node) field.get(this);
+                        cartaNode.setDisable(true);
+                    } catch (NoSuchFieldException | IllegalAccessException e) {
+                        System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName);
+                        e.printStackTrace();
+                    }
+                }
+            }//fin for
+
     		
 	    }
 	
 	    @FXML
-	    void Fil1Carta2(MouseEvent event) {
-    		ptoFil1Carta2.setVisible(false);
-	    }
-	
-	    @FXML
 	    void Fil1Carta3(MouseEvent event) {
-    		ptoFil1Carta3.setVisible(false);
+	    	
+    		//Se invoca metodo Crear cartas con la instancia creada de la clase Cartas
+    		actCarta.crearCartas(); 
+    		//Valor de la carta
+	        int resul2 = resultado [4];
+
+	        //Se almacenan datos de las cartas en el array
+	        
+    		Cartas.carta[2].setVal(resul2);
+    		Cartas.carta[2].setTemp(1);
+            Cartas.desbCarta(0);
+            
+    		boolean cv1 = Cartas.carta[2].isVis();
+    		boolean cb1 = Cartas.carta[2].isBloq();
+
+    		ptoFil1Carta3.setVisible(cv1);
+    		ptoFil1Carta3.setDisable(cb1);
+    		//ptoFil1Carta2.setOpacity(opac);
+  		
+    		//Se bloquean cartas diferentes a actual
+            for (int i = 0; i < Cartas.carta.length-4; i++) {
+                if (Cartas.carta[i].getTemp() == 0) {
+
+                    String cartaVariableName = "ptoFil1Carta" + (i + 1);
+
+                    try {
+                        Field field = getClass().getDeclaredField(cartaVariableName);
+                        field.setAccessible(true);
+                        Node cartaNode = (Node) field.get(this);
+                        cartaNode.setDisable(true);
+                    } catch (NoSuchFieldException | IllegalAccessException e) {
+                        System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName);
+                        e.printStackTrace();
+                    }
+                }
+            }//fin for
+    		
 	    }
+	    
 	
 	    @FXML
 	    void Fil1Carta4(MouseEvent event) {
-    		ptoFil1Carta4.setVisible(false);
+    		
+    		//Se invoca metodo Crear cartas con la instancia creada de la clase Cartas
+    		actCarta.crearCartas(); 
+    		
+    		//Valor de la carta
+	        int resul3 = resultado [4];
+
+	        //Se almacenan datos de las cartas en el array
+    		Cartas.carta[3].setVal(resul3);
+    		Cartas.carta[3].setTemp(1);
+            Cartas.desbCarta(0);
+            
+    		boolean cv1 = Cartas.carta[3].isVis();
+    		boolean cb1 = Cartas.carta[3].isBloq();
+
+    		ptoFil1Carta4.setVisible(cv1);
+    		ptoFil1Carta4.setDisable(cb1);
+    		//ptoFil1Carta3.setOpacity(opac);
+  		
+    		//Se bloquean cartas diferentes a actual
+            for (int i = 0; i < Cartas.carta.length-4; i++) {
+                if (Cartas.carta[i].getTemp() == 0) {
+
+                    String cartaVariableName = "ptoFil1Carta" + (i + 1);
+
+                    try {
+                        Field field = getClass().getDeclaredField(cartaVariableName);
+                        field.setAccessible(true);
+                        Node cartaNode = (Node) field.get(this);
+                        cartaNode.setDisable(true);
+                    } catch (NoSuchFieldException | IllegalAccessException e) {
+                        System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName);
+                        e.printStackTrace();
+                    }
+                }
+            }//fin for
+    		
+
 	    }
 	
 	    @FXML
 	    void Fil2Carta1(MouseEvent event) {
-    		ptoFil2Carta1.setVisible(false);
+
+	        int varR1 = aleaCartas[0];
+	        int nunCarta1 = resCartas[varR1];
+	        System.out.println("valor carta inferior : " + nunCarta1);
+	        
+	        Cartas.carta[4].setVal(nunCarta1);
+    		Cartas.carta[4].setTemp(1);
+	        //Cartas.carta[4].setVis(false);
+	        //Cartas.carta[4].setBloq(false);
+
+	        //boolean cv1 = Cartas.carta[4].isVis();
+	        //boolean cb1 = Cartas.carta[4].isVis();
+	        ptoFil2Carta1.setVisible(false);
+	        //ptoFil2Carta1.setDisable(cb1);
+	        
+            for (int i = 0; i < Cartas.carta.length -4; i++) {
+                if (Cartas.carta[i].getTemp() == 0) {
+
+                    String cartaVariableName2 = "ptoFil2Carta" + (i + 1);
+
+                    try {
+                        Field field2 = getClass().getDeclaredField(cartaVariableName2);
+                        field2.setAccessible(true);
+                        Node cartaNode2 = (Node) field2.get(this);
+                        cartaNode2.setDisable(true);
+                    } catch (NoSuchFieldException | IllegalAccessException e) {
+                        System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName2);
+                        e.printStackTrace();
+                    }
+                }
+            }//fin for
+
+
+	        int numeroBuscado = 1;
+	        int posic = Cartas.buscarCartaSuperior(numeroBuscado);
+	        int valCartaSup = Cartas.carta[posic].getVal();
+
+	        String cartaVariableName = "ptoFil1Carta" + (posic + 1);
+	        //System.out.println("valor nodo creado : " + cartaVariableName);
+            try {
+	        // Comparar el valor con el de la carta seleccionada en la fila superior
+	        if (nunCarta1 == valCartaSup) {
+	            
+                puntosNivel1.setText( String.valueOf(puntosNiv1 + 10));
+	        	Cartas.carta[posic].setTemp(2);
+	    		Cartas.carta[4].setTemp(2);
+	            
+                Field field = getClass().getDeclaredField(cartaVariableName);
+                field.setAccessible(true);
+                Node cartaNode = (Node) field.get(this);
+                cartaNode.setVisible(true);
+                cartaNode.setDisable(true);
+                cartaNode.setOpacity(0.05);
+                
+                for (int i = 0; i < Cartas.carta.length -4; i++) {
+                    if (Cartas.carta[i].getTemp() == 0) {
+                    	
+                        String cartaVariableNameN1 = "ptoFil1Carta" + (i + 1);
+                        String cartaVariableNameN11 = "ptoFil2Carta" + (i + 1);
+
+                        try {
+                        	
+                            Field field1 = getClass().getDeclaredField(cartaVariableNameN1);
+                            field1.setAccessible(true);
+                            Node cartaNode1 = (Node) field1.get(this);
+                            cartaNode1.setDisable(false);
+                        	
+                            Field field2 = getClass().getDeclaredField(cartaVariableNameN11);
+                            field2.setAccessible(true);
+                            Node cartaNode2 = (Node) field2.get(this);
+                            cartaNode2.setDisable(false);
+                        } catch (NoSuchFieldException | IllegalAccessException e) {
+                            System.out.println("No se pudo acceder al campo especificado: " + cartaVariableNameN11);
+                            e.printStackTrace();
+                        }
+                    }
+                }//fin for
+
+ 
+                //Cartas.desbCarta(0);
+                
+	            int prue = Cartas.carta[posic].getVal();
+	            int prue2 = Cartas.carta[posic].getTemp();
+	            System.out.println("valor carta verdadero : " + prue);
+	            System.out.println("valor temp carta verdadero : " + prue2);
+	            
+
+	        } else {
+	        		
+                puntosNivel1.setText( String.valueOf(puntosNiv1 - 10));
+	            Cartas.carta[posic].setTemp(0);
+	    		Cartas.carta[4].setTemp(0);
+
+	            // Obtener el nombre de la variable de la carta correspondiente
+	                Field field = getClass().getDeclaredField(cartaVariableName);
+	                field.setAccessible(true);
+	                Node cartaNode = (Node) field.get(this);
+	                
+	                PauseTransition pause = new PauseTransition(Duration.seconds(5)); // Pausa de 2 segundos
+	                pause.setOnFinished(e -> {cartaNode.setVisible(true); ptoFil2Carta1.setVisible(true);}); // Hacer visible el nodo después de la pausa
+	                pause.play();
+	                
+	                for (int i = 0; i < Cartas.carta.length -4; i++) {
+	                    if (Cartas.carta[i].getTemp() == 0) {
+	                    	
+	                        String cartaVariableNameN1 = "ptoFil1Carta" + (i + 1);
+	                        String cartaVariableNameN11 = "ptoFil2Carta" + (i + 1);
+
+	                        try {
+	                        	
+	                            Field field1 = getClass().getDeclaredField(cartaVariableNameN1);
+	                            field1.setAccessible(true);
+	                            Node cartaNode1 = (Node) field1.get(this);
+	                            cartaNode1.setDisable(false);
+	                        	
+	                            Field field2 = getClass().getDeclaredField(cartaVariableNameN11);
+	                            field2.setAccessible(true);
+	                            Node cartaNode2 = (Node) field2.get(this);
+	                            cartaNode2.setDisable(false);
+	                        } catch (NoSuchFieldException | IllegalAccessException e) {
+	                            System.out.println("No se pudo acceder al campo especificado: " + cartaVariableNameN11);
+	                            e.printStackTrace();
+	                        }
+	                    }
+	                }//fin for
+	            } 
+	        }catch (NoSuchFieldException | IllegalAccessException e) {
+                System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName);
+                e.printStackTrace();
+            }
+   
 	    }
+	    
 	
 	    @FXML
 	    void Fil2Carta2(MouseEvent event) {
+	    	
+	        int varR2 = aleaCartas[1];
+	    	
     		ptoFil2Carta2.setVisible(false);
 	    }
 	
 	    @FXML
 	    void Fil2Carta3(MouseEvent event) {
+	    	
+	        int varR3 = aleaCartas[2];
+	        
     		ptoFil2Carta3.setVisible(false);
 	    }
 	
 	    @FXML
 	    void Fil2Carta4(MouseEvent event) {
+	    	
+	        int varR4 = aleaCartas[3];
+	        
     		ptoFil2Carta4.setVisible(false);	
 
 	    }
@@ -193,8 +527,7 @@ public class VistaNivel1Controller {
 	    void btnAvanzar2(ActionEvent event) {
 	    	
 	    }
-	    
-	    	    	    		
+        
 
 	public void init(String text, String text2, Stage bienve, VistaBienvenidaController vistaBienvenidaController) {
 			
@@ -204,8 +537,6 @@ public class VistaNivel1Controller {
 
 		
 		//valores operacion carta 1 fila 1
-        int[] resultado = Operacion.suma();
-        int [] aleatorio = Operacion.aleatorio();
         int var1 = aleatorio[0];
         int var2 = aleatorio[1];
         int var3 = aleatorio[2];
@@ -225,8 +556,6 @@ public class VistaNivel1Controller {
         
         //valores operacion carta 2 fila 1
         
-        int[] resultado1 = Operacion.suma();
-        int [] aleatorio1 = Operacion.aleatorio();
         int var11 = aleatorio1[0];
         int var12 = aleatorio1[1];
         int var13 = aleatorio1[2];
@@ -245,8 +574,6 @@ public class VistaNivel1Controller {
 
         //valores operacion carta 3 fila 1
         
-        int[] resultado2 = Operacion.suma();
-        int [] aleatorio2 = Operacion.aleatorio();
         int var21 = aleatorio2[0];
         int var22 = aleatorio2[1];
         int var23 = aleatorio2[2];
@@ -266,8 +593,6 @@ public class VistaNivel1Controller {
         
         //valores operacion carta 4 fila 1
         
-        int[] resultado3 = Operacion.suma();
-        int [] aleatorio3 = Operacion.aleatorio();
         int var31 = aleatorio3[0];
         int var32 = aleatorio3[1];
         int var33 = aleatorio3[2];
@@ -284,10 +609,7 @@ public class VistaNivel1Controller {
         car4btn3.setText(String.valueOf(num35));
         
         
-        //Configuracion valores cartas fila 2 de respuestas
-        int[] resCartas = new int[4];
-        resCartas = new int []{resul, resul1, resul2, resul3};
-        int[] aleaCartas = Operacion.aleatorio2();
+        //Configuracion valores cartas fila 2 (1-4) de respuestas
         int varR1 = aleaCartas[0];
         int varR2 = aleaCartas[1];
         int varR3 = aleaCartas[2];
