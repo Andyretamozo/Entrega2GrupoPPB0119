@@ -30,14 +30,42 @@ public class VistaBienvenidaController {
     @FXML
     void btoIniciarJuego(ActionEvent event) throws IOException {
     	
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/VistaNivel1.fxml"));
-    	Parent root = loader.load();
-    	Scene scene = new Scene(root);
-    	Bienve.setScene(scene);
-      	VistaNivel1Controller controller = loader.getController();
-		Bienve.setTitle("Matemax: calcula y combina");
-    	controller.init(nombreBienvenido.getText(), labEdad.getText(), Bienve, this);
-    	Bienve.show();
+    	 String nombre = nombreBienvenido.getText();
+    	 String edad = labEdad.getText();
+    	 int edadInt = Integer.parseInt(edad);
+    	 
+    	 
+    	 
+    	 if (edadInt > 1 && edadInt <= 9) {
+
+    	    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/VistaNivel1.fxml"));
+    	    	Parent root = loader.load();
+    	    	Scene scene = new Scene(root);
+    	    	Bienve.setScene(scene);
+    	    
+    	      	VistaNivel1Controller controller = loader.getController();
+    			Bienve.setTitle("Matemax: calcula y combina");
+    	    	controller.init(nombreBienvenido.getText(), labEdad.getText(), Bienve, this);
+    	    	Bienve.show();
+    		 
+    		 
+    	 }else if(edadInt >= 9 && edadInt <= 12) {
+    		 FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/vistaNivel1C2.fxml"));
+ 	    	Parent root = loader.load();
+ 	    	Scene scene = new Scene(root);
+ 	    	Bienve.setScene(scene);
+ 	    
+ 	      	VistaNivel1Controller controller = loader.getController();
+ 			Bienve.setTitle("Matemax: calcula y combina");
+ 	    	controller.init(nombreBienvenido.getText(), labEdad.getText(), Bienve, this);
+ 	    	Bienve.show();
+    	 }else {
+    		 
+    		 alertaGeneral.showAlert("Error", "Aun no tenemos un nivel para la categoria de niños mayores de 12");
+	        	return;
+    	 }
+    	
+    }
     }
         
 
