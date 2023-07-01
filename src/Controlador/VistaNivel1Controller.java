@@ -1,7 +1,9 @@
 package Controlador;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
-
+import java.util.ArrayList;
+import java.util.List;
 import application.Cartas;
 import application.Operacion;
 import javafx.animation.PauseTransition;
@@ -22,9 +24,6 @@ public class VistaNivel1Controller {
  
 
 		Stage nivelActual1;
-		
-		//Puntos de nivel 1
-		int puntosNiv1 = 100;
 
 		@FXML
 	    private Button avanzar;
@@ -161,6 +160,18 @@ public class VistaNivel1Controller {
 	    @FXML
 	    private Label totAcumulado;
 	    
+	    
+	    private List<String> puntos; // Lista llamada "puntos"
+
+	    public VistaNivel1Controller() {
+	        puntos = new ArrayList<>(); // Inicializar la lista en el constructor de la clase
+	        puntos.add("0"); // Agregar el valor inicial del "Acumulado"
+	        puntos.add("200"); // Agregar el valor inicial de "puntosnivel1"
+	        puntos.add("0"); //Suma avanzar
+
+	    }
+	    
+	    
 	    //Se crea instancia de clase Cartas
 	    private Cartas actCarta = new Cartas();
 
@@ -189,9 +200,11 @@ public class VistaNivel1Controller {
         int resul1 = resultado1[4];
         int resul2 = resultado2[4];
         int resul3 = resultado3[4];
+
+        
         int[] resCartas = {resul, resul1, resul2, resul3};	 //este array se usa con el metodo obtenerRescartas
         int[] aleaCartas = obtenerResCartas(resCartas) ;
-	        	
+	             
 	    @FXML
 	    void Fil1Carta1(MouseEvent event) {
 	    	
@@ -200,26 +213,29 @@ public class VistaNivel1Controller {
     		
     		//Valor de la carta
 	        int resul = resultado [4];
-
-	        //Se almacenan datos de las cartas en el array
+            System.out.println("valor carta superior es: " + resul);
 	        
-    		Cartas.carta[0].setVal(resul); // valor es resul
+            //Se almacenan datos de las cartas en el array	        
+    		Cartas.carta[0].setVal(resul); // valor es resul @@6@ ojo cambiar
     		Cartas.carta[0].setTemp(1);
-            Cartas.desbCarta(0);
+            //Cartas.desbCarta(0);
             
+    		//Se asignan valores iniciales de la carta actual
     		boolean cv1 = Cartas.carta[0].isVis();
     		boolean cb1 = Cartas.carta[0].isBloq();
 
     		ptoFil1Carta1.setVisible(cv1);
     		ptoFil1Carta1.setDisable(cb1);
-    		//ptoFil1Carta3.setOpacity(opac);
   		
     		//Se bloquean cartas diferentes a actual
             for (int i = 0; i < Cartas.carta.length-4; i++) {
                 if (Cartas.carta[i].getTemp() == 0) {
 
                     String cartaVariableName = "ptoFil1Carta" + (i + 1);
-
+                    
+    	            int prue = Cartas.carta[i].getTemp();//prueba
+    	            System.out.println("valor cartas a bloquear select fila 1 : " + cartaVariableName +" es "+ + prue); //prueba
+    	            
                     try {
                         Field field = getClass().getDeclaredField(cartaVariableName);
                         field.setAccessible(true);
@@ -231,8 +247,31 @@ public class VistaNivel1Controller {
                     }
                 }
             }//fin for
+            System.out.println("----------------------");//prueba
+            
+    		//Se desbloquean cartas diferentes inferiores sin coincidir
+            for (int x = 4; x < Cartas.carta.length; x++) {
+                if (Cartas.carta[x].getTemp() == 0) {
 
-	    }
+                    String cartaVariableName = "ptoFil2Carta" + (x -3);
+                    
+    	            int prue = Cartas.carta[x].getTemp();//prueba
+    	            System.out.println("valor cartas a desbloquear al select fila sup en fila inf: " + cartaVariableName +" es "+ + prue); //prueba
+    	            
+                    try {
+                        Field field = getClass().getDeclaredField(cartaVariableName);
+                        field.setAccessible(true);
+                        Node cartaNode = (Node) field.get(this);
+                        cartaNode.setDisable(false);
+                    } catch (NoSuchFieldException | IllegalAccessException e) {
+                        System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName);
+                        e.printStackTrace();
+                    }
+                }
+            }//fin for
+            System.out.println("----------------------");//prueba
+
+	    }//fin evento Fil1Car1
 	    
 
 	
@@ -242,27 +281,29 @@ public class VistaNivel1Controller {
 	    	//Se invoca metodo Crear cartas con la instancia creada de la clase Cartas
     		actCarta.crearCartas(); 
     		//Valor de la carta
-	        int resul1 = resultado [4];
-
+	        int resul1 = resultado1 [4];
+            System.out.println("valor carta superior es: " + resul1);
 	        //Se almacenan datos de las cartas en el array
 	        
     		Cartas.carta[1].setVal(resul1);
     		Cartas.carta[1].setTemp(1);
-            Cartas.desbCarta(0);
             
+    		//Se asignan valores iniciales de la carta actual
     		boolean cv1 = Cartas.carta[1].isVis();
     		boolean cb1 = Cartas.carta[1].isBloq();
 
     		ptoFil1Carta2.setVisible(cv1);
     		ptoFil1Carta2.setDisable(cb1);
-    		//ptoFil1Carta2.setOpacity(opac);
   		
     		//Se bloquean cartas diferentes a actual
             for (int i = 0; i < Cartas.carta.length-4; i++) {
                 if (Cartas.carta[i].getTemp() == 0) {
 
                     String cartaVariableName = "ptoFil1Carta" + (i + 1);
-
+                    
+    	            int prue = Cartas.carta[i].getTemp();//prueba
+    	            System.out.println("valor cartas a bloquear select fila 1 : " + cartaVariableName +" es "+ + prue); //prueba
+    	            
                     try {
                         Field field = getClass().getDeclaredField(cartaVariableName);
                         field.setAccessible(true);
@@ -274,9 +315,30 @@ public class VistaNivel1Controller {
                     }
                 }
             }//fin for
+            System.out.println("----------------------");//prueba
+            
+    		//Se desbloquean cartas diferentes inferiores sin coincidir
+            for (int x = 4; x < Cartas.carta.length; x++) {
+                if (Cartas.carta[x].getTemp() == 0) {
 
-    		
-	    }
+                    String cartaVariableName = "ptoFil2Carta" + (x -3);
+                    
+    	            int prue = Cartas.carta[x].getTemp();//prueba
+    	            System.out.println("valor cartas a desbloquear al select fila sup en fila inf: " + cartaVariableName +" es "+ + prue); //prueba
+    	            
+                    try {
+                        Field field = getClass().getDeclaredField(cartaVariableName);
+                        field.setAccessible(true);
+                        Node cartaNode = (Node) field.get(this);
+                        cartaNode.setDisable(false);
+                    } catch (NoSuchFieldException | IllegalAccessException e) {
+                        System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName);
+                        e.printStackTrace();
+                    }
+                }
+            }//fin for
+            System.out.println("----------------------");//prueba	      		
+	    }//fin evento Fil1Car2
 	
 	    @FXML
 	    void Fil1Carta3(MouseEvent event) {
@@ -284,27 +346,29 @@ public class VistaNivel1Controller {
     		//Se invoca metodo Crear cartas con la instancia creada de la clase Cartas
     		actCarta.crearCartas(); 
     		//Valor de la carta
-	        int resul2 = resultado [4];
-
+	        int resul2 = resultado2 [4];
+            System.out.println("valor carta superior es: " + resul2);
 	        //Se almacenan datos de las cartas en el array
 	        
     		Cartas.carta[2].setVal(resul2);
     		Cartas.carta[2].setTemp(1);
-            Cartas.desbCarta(0);
             
+    		//Se asignan valores iniciales de la carta actual
     		boolean cv1 = Cartas.carta[2].isVis();
     		boolean cb1 = Cartas.carta[2].isBloq();
 
     		ptoFil1Carta3.setVisible(cv1);
     		ptoFil1Carta3.setDisable(cb1);
-    		//ptoFil1Carta2.setOpacity(opac);
   		
     		//Se bloquean cartas diferentes a actual
             for (int i = 0; i < Cartas.carta.length-4; i++) {
                 if (Cartas.carta[i].getTemp() == 0) {
 
                     String cartaVariableName = "ptoFil1Carta" + (i + 1);
-
+                    
+    	            int prue = Cartas.carta[i].getTemp();//prueba
+    	            System.out.println("valor cartas a bloquear select fila 1 : " + cartaVariableName +" es "+ + prue); //prueba
+    	            
                     try {
                         Field field = getClass().getDeclaredField(cartaVariableName);
                         field.setAccessible(true);
@@ -316,8 +380,31 @@ public class VistaNivel1Controller {
                     }
                 }
             }//fin for
+            System.out.println("----------------------");//prueba
+            
+    		//Se desbloquean cartas diferentes inferiores sin coincidir
+            for (int x = 4; x < Cartas.carta.length; x++) {
+                if (Cartas.carta[x].getTemp() == 0) {
+
+                    String cartaVariableName = "ptoFil2Carta" + (x -3);
+                    
+    	            int prue = Cartas.carta[x].getTemp();//prueba
+    	            System.out.println("valor cartas a desbloquear al select fila sup en fila inf: " + cartaVariableName +" es "+ + prue); //prueba
+    	            
+                    try {
+                        Field field = getClass().getDeclaredField(cartaVariableName);
+                        field.setAccessible(true);
+                        Node cartaNode = (Node) field.get(this);
+                        cartaNode.setDisable(false);
+                    } catch (NoSuchFieldException | IllegalAccessException e) {
+                        System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName);
+                        e.printStackTrace();
+                    }
+                }
+            }//fin for
+            System.out.println("----------------------");//prueba
     		
-	    }
+	    }//fin evento Fil1Car3
 	    
 	
 	    @FXML
@@ -327,26 +414,29 @@ public class VistaNivel1Controller {
     		actCarta.crearCartas(); 
     		
     		//Valor de la carta
-	        int resul3 = resultado [4];
-
+	        int resul3 = resultado3 [4];
+            System.out.println("valor carta superior es: " + resul3);
 	        //Se almacenan datos de las cartas en el array
     		Cartas.carta[3].setVal(resul3);
     		Cartas.carta[3].setTemp(1);
-            Cartas.desbCarta(0);
-            
+
+    		//Se asignan valores iniciales de la carta actual
     		boolean cv1 = Cartas.carta[3].isVis();
     		boolean cb1 = Cartas.carta[3].isBloq();
 
     		ptoFil1Carta4.setVisible(cv1);
     		ptoFil1Carta4.setDisable(cb1);
-    		//ptoFil1Carta3.setOpacity(opac);
+
   		
     		//Se bloquean cartas diferentes a actual
             for (int i = 0; i < Cartas.carta.length-4; i++) {
                 if (Cartas.carta[i].getTemp() == 0) {
 
                     String cartaVariableName = "ptoFil1Carta" + (i + 1);
-
+                    
+    	            int prue = Cartas.carta[i].getTemp();//prueba
+    	            System.out.println("valor cartas a bloquear select fila 1 : " + cartaVariableName +" es "+ + prue); //prueba
+    	            
                     try {
                         Field field = getClass().getDeclaredField(cartaVariableName);
                         field.setAccessible(true);
@@ -358,31 +448,51 @@ public class VistaNivel1Controller {
                     }
                 }
             }//fin for
-    		
+            System.out.println("----------------------");//prueba
+            
+    		//Se desbloquean cartas diferentes inferiores sin coincidir
+            for (int x = 4; x < Cartas.carta.length; x++) {
+                if (Cartas.carta[x].getTemp() == 0) {
+
+                    String cartaVariableName = "ptoFil2Carta" + (x -3);
+                    
+    	            int prue = Cartas.carta[x].getTemp();//prueba
+    	            System.out.println("valor cartas a desbloquear al select fila sup en fila inf: " + cartaVariableName +" es "+ + prue); //prueba
+    	            
+                    try {
+                        Field field = getClass().getDeclaredField(cartaVariableName);
+                        field.setAccessible(true);
+                        Node cartaNode = (Node) field.get(this);
+                        cartaNode.setDisable(false);
+                    } catch (NoSuchFieldException | IllegalAccessException e) {
+                        System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName);
+                        e.printStackTrace();
+                    }
+                }
+            }//fin for
+            System.out.println("----------------------");//prueba  		
 
 	    }
 	
 	    @FXML
 	    void Fil2Carta1(MouseEvent event) {
-
+	    	            
+	    	//Se asigna el valor a carta actual aleatorio del array resCartas
 	        int varR1 = aleaCartas[0];
 	        int nunCarta1 = resCartas[varR1];
-	        System.out.println("valor carta inferior : " + nunCarta1);
 	        
+	        //Se almacena el valor de la carta actual en la posicion 4 de la lista carta
 	        Cartas.carta[4].setVal(nunCarta1);
     		Cartas.carta[4].setTemp(1);
-	        //Cartas.carta[4].setVis(false);
-	        //Cartas.carta[4].setBloq(false);
-
-	        //boolean cv1 = Cartas.carta[4].isVis();
-	        //boolean cb1 = Cartas.carta[4].isVis();
 	        ptoFil2Carta1.setVisible(false);
-	        //ptoFil2Carta1.setDisable(cb1);
-	        
+	       	      
+            //se deshabilitan cartas sin coincidir fila inferior
             for (int i = 0; i < Cartas.carta.length -4; i++) {
                 if (Cartas.carta[i].getTemp() == 0) {
-
-                    String cartaVariableName2 = "ptoFil2Carta" + (i + 1);
+                    
+    	            String cartaVariableName2 = "ptoFil2Carta" + (i + 1);
+    	            int prue = Cartas.carta[i].getTemp();//prueba
+    	            System.out.println("valor temp a bloquear: " + cartaVariableName2 +" es "+ + prue); //prueba
 
                     try {
                         Field field2 = getClass().getDeclaredField(cartaVariableName2);
@@ -395,22 +505,65 @@ public class VistaNivel1Controller {
                     }
                 }
             }//fin for
-
-
+            System.out.println("----------------------");//prueba
+	     
+            /*
+             * Se inicia verificacion de coincidencia
+             */
 	        int numeroBuscado = 1;
 	        int posic = Cartas.buscarCartaSuperior(numeroBuscado);
 	        int valCartaSup = Cartas.carta[posic].getVal();
 
 	        String cartaVariableName = "ptoFil1Carta" + (posic + 1);
-	        //System.out.println("valor nodo creado : " + cartaVariableName);
+	        System.out.println("valor carta superior " + cartaVariableName +" es "+ valCartaSup + ", valor carta inferior : " + nunCarta1);//prueba
+	        	        
             try {
 	        // Comparar el valor con el de la carta seleccionada en la fila superior
 	        if (nunCarta1 == valCartaSup) {
+	        	
+		        System.out.println("valor carta inferior y superior coinciden");//prueba
+		        
+		        // Se accede a los valores de la lista "puntos"
+		        int acumtotal = Integer.parseInt (puntos.get(0)); // Obtener el valor de "Acumulado" de la lista
+		        int ptosNivel = Integer.parseInt (puntos.get(1)); // Obtener el valor de "puntosnivel1" de la lista
+		        int ptosAvan = Integer.parseInt (puntos.get(2)); // Obtener el valor de "puntosnivel1" de la lista
+		        		        
+		        // Se incrementa puntos de nivel +10	    
+		        ptosNivel += 10;
+		        ptosAvan +=10;
+		        System.out.println("valor carta inferior y superior coinciden puntos se suma 10 " + ptosNivel);//prueba
+		        //acumtotal = ptosNivel; // Se actualiza acumulado
+		        
+		        // Se guardan en una variable a String
+		        String ptosN1 = Integer.toString(ptosNivel);
+		        String acumN1 = Integer.toString(acumtotal);
+		        String avnzN1 = Integer.toString(ptosAvan);
+		        
+		        puntos.set(0, acumN1); // Actualizar el valor de "Acumulado" en la lista
+		        puntos.set(1, ptosN1); // Actualizar el valor de "puntosnivel" en la lista
+		        puntos.set(2, avnzN1); // Actualizar el valor de "puntosnivel" en la lista
+		        
+		        int ptosNivelpr = Integer.parseInt (puntos.get(1)); // Obtener el valor de "puntosnivel1" de la lista
+		        System.out.println("coinciden valor nuevo puntos de nivel " + ptosNivelpr);//prueba
+		        
+		        String ptoNiv1Str = (puntos.get(1));
+		        String avanz2 = (puntos.get(2));
+		        System.out.println("Valor acumulado para avanzar " + avanz2);//prueba
+	            puntosNivel1.setText(ptoNiv1Str);
+	            totAcumulado.setText(ptoNiv1Str); // @@@ ojo en este nivel acumulado es el mismo valor de puntosNivel1
 	            
-                puntosNivel1.setText( String.valueOf(puntosNiv1 + 10));
+                
+		    	 // Carta superior se tomo temporal como 2
 	        	Cartas.carta[posic].setTemp(2);
-	    		Cartas.carta[4].setTemp(2);
+		    	//Carta inferior se tomo temporal como 2
+	    		Cartas.carta[4].setTemp(2); //@@@ojo cambiar valor en otras filas de carta[valor carta inferior]
+		    	//Sebloquea carta que coincide inferior
+		        ptoFil2Carta1.setVisible(false);
+		        ptoFil2Carta1.setDisable(true);
 	            
+		        /*
+		         * Se bloquea carta que coincide Superior
+		         */
                 Field field = getClass().getDeclaredField(cartaVariableName);
                 field.setAccessible(true);
                 Node cartaNode = (Node) field.get(this);
@@ -418,12 +571,15 @@ public class VistaNivel1Controller {
                 cartaNode.setDisable(true);
                 cartaNode.setOpacity(0.05);
                 
+                //se habilitan cartas sin coincidir de la fila superior
                 for (int i = 0; i < Cartas.carta.length -4; i++) {
                     if (Cartas.carta[i].getTemp() == 0) {
                     	
                         String cartaVariableNameN1 = "ptoFil1Carta" + (i + 1);
-                        String cartaVariableNameN11 = "ptoFil2Carta" + (i + 1);
-
+                      
+        	            int prue = Cartas.carta[i].getTemp();//prueba
+        	            System.out.println("valor coincide sup a b : " + cartaVariableNameN1 +" es "+ + prue); //prueba      	         
+        	            
                         try {
                         	
                             Field field1 = getClass().getDeclaredField(cartaVariableNameN1);
@@ -431,16 +587,38 @@ public class VistaNivel1Controller {
                             Node cartaNode1 = (Node) field1.get(this);
                             cartaNode1.setDisable(false);
                         	
-                            Field field2 = getClass().getDeclaredField(cartaVariableNameN11);
-                            field2.setAccessible(true);
-                            Node cartaNode2 = (Node) field2.get(this);
-                            cartaNode2.setDisable(false);
                         } catch (NoSuchFieldException | IllegalAccessException e) {
-                            System.out.println("No se pudo acceder al campo especificado: " + cartaVariableNameN11);
+                            System.out.println("No se pudo acceder al campo especificado: " + cartaVariableNameN1);
                             e.printStackTrace();
                         }
                     }
                 }//fin for
+                System.out.println("----------------------");//prueba
+                
+                //se deshabilitan cartas sin coincidir de la fila inferior
+                for (int x = 4; x < Cartas.carta.length; x++) {
+                    if (Cartas.carta[x].getTemp() == 0) {
+
+                        String cartaVariableName2 = "ptoFil2Carta" + (x -3);
+                        
+                        
+        	            int prue = Cartas.carta[x].getTemp();//prueba
+        	            System.out.println("Se bloquean cartas inferiores sin coincidir " + cartaVariableName2 +" y valor temp es "+ + prue); //prueba
+        	            
+                        try {
+                            Field field2 = getClass().getDeclaredField(cartaVariableName2);
+                            field2.setAccessible(true);
+                            Node cartaNode2 = (Node) field2.get(this);
+                            cartaNode2.setDisable(true);
+                        } catch (NoSuchFieldException | IllegalAccessException ex) {
+                            System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName2);
+                            ex.printStackTrace();
+                        }
+                    }
+                }//fin for
+                System.out.println("----------------------");//prueba
+                
+                
 
  
                 //Cartas.desbCarta(0);
@@ -452,8 +630,35 @@ public class VistaNivel1Controller {
 	            
 
 	        } else {
-	        		
-                puntosNivel1.setText( String.valueOf(puntosNiv1 - 10));
+	        	
+		        System.out.println("valor carta inferior y superior no coinciden");//prueba
+		        
+			    // Se decrementa puntos de nivel -10	    	    
+		        int acumtotal = Integer.parseInt (puntos.get(0)); // Obtener el valor de "Acumulado" de la lista
+		        int ptosNivel = Integer.parseInt (puntos.get(1)); // Obtener el valor de "puntosnivel1" de la lista
+		        //String ptoNiv1Str = (puntos.get(1));
+		        		        
+		        // Se incrementa puntos de nivel +10	    
+		        ptosNivel -= 10;
+		        System.out.println("valor carta inferior y superior coinciden puntos se suma 10 " + ptosNivel);//prueba
+		        //acumtotal = ptosNivel; // Se actualiza acumulado
+		        
+		        // Se guardan en una variable a String
+		        String ptosN1 = Integer.toString(ptosNivel);
+		        String acumN1 = Integer.toString(acumtotal);
+		        
+		        puntos.set(0, acumN1); // Actualizar el valor de "Acumulado" en la lista
+		        puntos.set(1, ptosN1); // Actualizar el valor de "puntosnivel" en la lista
+		        
+		        int ptosNivelpr = Integer.parseInt (puntos.get(1)); // Obtener el valor de "puntosnivel1" de la lista
+		        System.out.println("coinciden valor nuevo puntos de nivel " + ptosNivelpr);//prueba
+		        
+		        //Se asigna nuevo valor al label puntosNivel1
+		        String ptoNiv1Str = (puntos.get(1));
+	            puntosNivel1.setText(ptoNiv1Str);
+	            totAcumulado.setText(ptoNiv1Str); // @@@ ojo en este nivel acumulado es el mismo valor de puntosNivel1
+	            
+
 	            Cartas.carta[posic].setTemp(0);
 	    		Cartas.carta[4].setTemp(0);
 
@@ -463,14 +668,40 @@ public class VistaNivel1Controller {
 	                Node cartaNode = (Node) field.get(this);
 	                
 	                PauseTransition pause = new PauseTransition(Duration.seconds(5)); // Pausa de 2 segundos
-	                pause.setOnFinished(e -> {cartaNode.setVisible(true); ptoFil2Carta1.setVisible(true);}); // Hacer visible el nodo después de la pausa
-	                pause.play();
+	                pause.setOnFinished(e -> {
+	                	
+	                	cartaNode.setVisible(true); 
+	                	ptoFil2Carta1.setVisible(true);
+	                	
+	                //se deshabilitan cartas sin coincidir de la fila inferior
+	                for (int x = 4; x < Cartas.carta.length; x++) {
+	                    if (Cartas.carta[x].getTemp() == 0) {
+
+	                        String cartaVariableName2 = "ptoFil2Carta" + (x -3);
+	                        
+	        	            int prue = Cartas.carta[x].getTemp();//prueba
+	        	            System.out.println("Se bloquean cartas inferiores sin coincidir " + cartaVariableName2 +" y valor temp es "+ + prue); //prueba
+	        	            
+	                        try {
+	                            Field field2 = getClass().getDeclaredField(cartaVariableName2);
+	                            field2.setAccessible(true);
+	                            Node cartaNode2 = (Node) field2.get(this);
+	                            cartaNode2.setDisable(true);
+	                        } catch (NoSuchFieldException | IllegalAccessException ex) {
+	                            System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName2);
+	                            ex.printStackTrace();
+	                        }
+	                    }
+	                }//fin for
+	                System.out.println("----------------------");//prueba
 	                
-	                for (int i = 0; i < Cartas.carta.length -4; i++) {
+	                //se habilitan cartas sin coincidir de la fila superior
+	                for (int i = 0; i < Cartas.carta.length -4; i++) { // al bloquear una carta queda un campo de mas en el array
 	                    if (Cartas.carta[i].getTemp() == 0) {
 	                    	
 	                        String cartaVariableNameN1 = "ptoFil1Carta" + (i + 1);
-	                        String cartaVariableNameN11 = "ptoFil2Carta" + (i + 1);
+	           	            int prue = Cartas.carta[i].getTemp();//prueba
+	        	            System.out.println("Se habilitan cartas superiores sin coincidir " + cartaVariableNameN1 +" valor temp es "+ + prue); //prueba
 
 	                        try {
 	                        	
@@ -479,16 +710,17 @@ public class VistaNivel1Controller {
 	                            Node cartaNode1 = (Node) field1.get(this);
 	                            cartaNode1.setDisable(false);
 	                        	
-	                            Field field2 = getClass().getDeclaredField(cartaVariableNameN11);
-	                            field2.setAccessible(true);
-	                            Node cartaNode2 = (Node) field2.get(this);
-	                            cartaNode2.setDisable(false);
-	                        } catch (NoSuchFieldException | IllegalAccessException e) {
-	                            System.out.println("No se pudo acceder al campo especificado: " + cartaVariableNameN11);
-	                            e.printStackTrace();
+	                        } catch (NoSuchFieldException | IllegalAccessException ex) {
+	                            System.out.println("No se pudo acceder al campo especificado: " + cartaVariableNameN1);
+	                            ex.printStackTrace();
 	                        }
 	                    }
 	                }//fin for
+	                System.out.println("----------------------");//prueba
+	                
+	                }); // Hacer visible el nodo después de la pausa
+	                pause.play();
+	                
 	            } 
 	        }catch (NoSuchFieldException | IllegalAccessException e) {
                 System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName);
@@ -500,32 +732,790 @@ public class VistaNivel1Controller {
 	
 	    @FXML
 	    void Fil2Carta2(MouseEvent event) {
-	    	
+	    		    	
+	    	//Se asigna el valor a carta actual aleatorio del array resCartas
 	        int varR2 = aleaCartas[1];
-	    	
-    		ptoFil2Carta2.setVisible(false);
+	        int nunCarta1 = resCartas[varR2];
+	        
+	        //Se almacena el valor de la carta actual en la posicion 5 de la lista carta
+	        Cartas.carta[5].setVal(nunCarta1);
+    		Cartas.carta[5].setTemp(1);
+	        ptoFil2Carta2.setVisible(false);
+	       	      
+            //se deshabilitan cartas sin coincidir fila inferior
+            for (int i = 0; i < Cartas.carta.length -4; i++) {
+                if (Cartas.carta[i].getTemp() == 0) {
+                    
+    	            String cartaVariableName2 = "ptoFil2Carta" + (i + 1);
+    	            int prue = Cartas.carta[i].getTemp();//prueba
+    	            System.out.println("valor temp a bloquear: " + cartaVariableName2 +" es "+ + prue); //prueba
+
+                    try {
+                        Field field2 = getClass().getDeclaredField(cartaVariableName2);
+                        field2.setAccessible(true);
+                        Node cartaNode2 = (Node) field2.get(this);
+                        cartaNode2.setDisable(true);
+                    } catch (NoSuchFieldException | IllegalAccessException e) {
+                        System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName2);
+                        e.printStackTrace();
+                    }
+                }
+            }//fin for
+            System.out.println("----------------------");//prueba
+	     
+            /*
+             * Se inicia verificacion de coincidencia
+             */
+	        int numeroBuscado = 1;
+	        int posic = Cartas.buscarCartaSuperior(numeroBuscado);
+	        int valCartaSup = Cartas.carta[posic].getVal();
+
+	        String cartaVariableName = "ptoFil1Carta" + (posic + 1);
+	        System.out.println("valor carta superior " + cartaVariableName +" es "+ valCartaSup + ", valor carta inferior : " + nunCarta1);//prueba
+
+	        
+	        
+            try {
+	        // Comparar el valor con el de la carta seleccionada en la fila superior
+	        if (nunCarta1 == valCartaSup) {
+	        	
+		        System.out.println("valor carta inferior y superior coinciden");//prueba
+		        
+		     // Se accede a los valores de la lista "puntos"
+		        int acumtotal = Integer.parseInt (puntos.get(0)); // Obtener el valor de "Acumulado" de la lista
+		        int ptosNivel = Integer.parseInt (puntos.get(1)); // Obtener el valor de "puntosnivel1" de la lista
+		        int ptosAvan = Integer.parseInt (puntos.get(2)); // Obtener el valor de "puntosnivel1" de la lista
+		        //String ptoNiv1Str = (puntos.get(1));
+		        		        
+		        // Se incrementa puntos de nivel +10	    
+		        ptosNivel += 10;
+		        ptosAvan +=10;
+		        System.out.println("valor carta inferior y superior coinciden puntos se suma 10 " + ptosNivel);//prueba
+		        //acumtotal = ptosNivel; // Se actualiza acumulado
+		        
+		        // Se guardan en una variable a String
+		        String ptosN1 = Integer.toString(ptosNivel);
+		        String acumN1 = Integer.toString(acumtotal);		        
+		        String avnzN1 = Integer.toString(ptosAvan);
+		        
+		        puntos.set(0, acumN1); // Actualizar el valor de "Acumulado" en la lista
+		        puntos.set(1, ptosN1); // Actualizar el valor de "puntosnivel" en la lista
+		        puntos.set(2, avnzN1); // Actualizar el valor de "puntosnivel" en la lista
+		        
+		        int ptosNivelpr = Integer.parseInt (puntos.get(1)); // Obtener el valor de "puntosnivel1" de la lista
+		        System.out.println("coinciden valor nuevo puntos de nivel " + ptosNivelpr);//prueba
+		        
+		        String ptoNiv1Str = (puntos.get(1));
+	            puntosNivel1.setText(ptoNiv1Str);
+	            totAcumulado.setText(ptoNiv1Str); // @@@ ojo en este nivel acumulado es el mismo valor de puntosNivel1
+
+		        
+		    	 // Carta superior se tomo temporal como 2
+	        	Cartas.carta[posic].setTemp(2);
+		    	//Carta inferior se tomo temporal como 2
+	    		Cartas.carta[5].setTemp(2); //@@@ojo cambiar valor en otras filas de carta[valor carta inferior]
+		    	//Sebloquea carta que coincide inferior
+		        ptoFil2Carta2.setVisible(false);
+		        ptoFil2Carta2.setDisable(true);
+	            
+		        /*
+		         * Se bloquea carta que coincide Superior
+		         */
+                Field field = getClass().getDeclaredField(cartaVariableName);
+                field.setAccessible(true);
+                Node cartaNode = (Node) field.get(this);
+                cartaNode.setVisible(true);
+                cartaNode.setDisable(true);
+                cartaNode.setOpacity(0.05);
+                
+                //se habilitan cartas sin coincidir de la fila superior
+                for (int i = 0; i < Cartas.carta.length -4; i++) {
+                    if (Cartas.carta[i].getTemp() == 0) {
+                    	
+                        String cartaVariableNameN1 = "ptoFil1Carta" + (i + 1);
+                      
+        	            int prue = Cartas.carta[i].getTemp();//prueba
+        	            System.out.println("valor coincide sup a b : " + cartaVariableNameN1 +" es "+ + prue); //prueba      	         
+        	            
+                        try {
+                        	
+                            Field field1 = getClass().getDeclaredField(cartaVariableNameN1);
+                            field1.setAccessible(true);
+                            Node cartaNode1 = (Node) field1.get(this);
+                            cartaNode1.setDisable(false);
+                        	
+                        } catch (NoSuchFieldException | IllegalAccessException e) {
+                            System.out.println("No se pudo acceder al campo especificado: " + cartaVariableNameN1);
+                            e.printStackTrace();
+                        }
+                    }
+                }//fin for
+                System.out.println("----------------------");//prueba
+                
+                //se deshabilitan cartas sin coincidir de la fila inferior
+                for (int x = 4; x < Cartas.carta.length; x++) {
+                    if (Cartas.carta[x].getTemp() == 0) {
+
+                        String cartaVariableName2 = "ptoFil2Carta" + (x -3);
+                        
+        	            int prue = Cartas.carta[x].getTemp();//prueba
+        	            System.out.println("Se bloquean cartas inferiores sin coincidir " + cartaVariableName2 +" y valor temp es "+ + prue); //prueba
+        	            
+                        try {
+                            Field field2 = getClass().getDeclaredField(cartaVariableName2);
+                            field2.setAccessible(true);
+                            Node cartaNode2 = (Node) field2.get(this);
+                            cartaNode2.setDisable(true);
+                        } catch (NoSuchFieldException | IllegalAccessException ex) {
+                            System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName2);
+                            ex.printStackTrace();
+                        }
+                    }
+                }//fin for
+                System.out.println("----------------------");//prueba
+                
+                
+
+ 
+                //Cartas.desbCarta(0);
+                
+	            int prue = Cartas.carta[posic].getVal();
+	            int prue2 = Cartas.carta[posic].getTemp();
+	            System.out.println("valor carta inferior verdadero : " + prue);
+	            System.out.println("valor temp carta verdadero : " + prue2);
+	            
+
+	        } else {
+	        	
+		        System.out.println("valor carta inferior y superior no coinciden");//prueba
+		        
+		     // Se decrementa puntos de nivel -10	    	    
+		        int acumtotal = Integer.parseInt (puntos.get(0)); // Obtener el valor de "Acumulado" de la lista
+		        int ptosNivel = Integer.parseInt (puntos.get(1)); // Obtener el valor de "puntosnivel1" de la lista
+		        //String ptoNiv1Str = (puntos.get(1));
+		        		        
+		        // Se incrementa puntos de nivel +10	    
+		        ptosNivel -= 10;
+		        System.out.println("valor carta inferior y superior coinciden puntos se suma 10 " + ptosNivel);//prueba
+		        //acumtotal = ptosNivel; // Se actualiza acumulado
+		        
+		        // Se guardan en una variable a String
+		        String ptosN1 = Integer.toString(ptosNivel);
+		        String acumN1 = Integer.toString(acumtotal);
+		        
+		        puntos.set(0, acumN1); // Actualizar el valor de "Acumulado" en la lista
+		        puntos.set(1, ptosN1); // Actualizar el valor de "puntosnivel" en la lista
+		        
+		        int ptosNivelpr = Integer.parseInt (puntos.get(1)); // Obtener el valor de "puntosnivel1" de la lista
+		        System.out.println("coinciden valor nuevo puntos de nivel " + ptosNivelpr);//prueba
+		        
+		        //Se asigna nuevo valor al label puntosNivel1
+		        String ptoNiv1Str = (puntos.get(1));
+	            puntosNivel1.setText(ptoNiv1Str);
+	            totAcumulado.setText(ptoNiv1Str); // @@@ ojo en este nivel acumulado es el mismo valor de puntosNivel1
+
+
+	            Cartas.carta[posic].setTemp(0);
+	    		Cartas.carta[5].setTemp(0); //----- cambiar carta
+
+	            // Obtener el nombre de la variable de la carta correspondiente
+	                Field field = getClass().getDeclaredField(cartaVariableName);
+	                field.setAccessible(true);
+	                Node cartaNode = (Node) field.get(this);
+	                
+	                PauseTransition pause = new PauseTransition(Duration.seconds(5)); // Pausa de 2 segundos
+	                pause.setOnFinished(e -> {
+	                	
+	                	cartaNode.setVisible(true); 
+	                	ptoFil2Carta2.setVisible(true); //-------cambiar carta
+	                	
+	                //se deshabilitan cartas sin coincidir de la fila inferior
+	                for (int x = 4; x < Cartas.carta.length; x++) {
+	                    if (Cartas.carta[x].getTemp() == 0) {
+
+	                        String cartaVariableName2 = "ptoFil2Carta" + (x -3);
+	                        
+	        	            int prue = Cartas.carta[x].getTemp();//prueba
+	        	            System.out.println("Se bloquean cartas inferiores sin coincidir " + cartaVariableName2 +" y valor temp es "+ + prue); //prueba
+	        	            
+	                        try {
+	                            Field field2 = getClass().getDeclaredField(cartaVariableName2);
+	                            field2.setAccessible(true);
+	                            Node cartaNode2 = (Node) field2.get(this);
+	                            cartaNode2.setDisable(true);
+	                        } catch (NoSuchFieldException | IllegalAccessException ex) {
+	                            System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName2);
+	                            ex.printStackTrace();
+	                        }
+	                    }
+	                }//fin for
+	                System.out.println("----------------------");//prueba
+	                
+	                //se habilitan cartas sin coincidir de la fila superior
+	                for (int i = 0; i < Cartas.carta.length -4; i++) { // al bloquear una carta queda un campo de mas en el array
+	                    if (Cartas.carta[i].getTemp() == 0) {
+	                    	
+	                        String cartaVariableNameN1 = "ptoFil1Carta" + (i + 1);
+	           	            int prue = Cartas.carta[i].getTemp();//prueba
+	        	            System.out.println("Se habilitan cartas superiores sin coincidir " + cartaVariableNameN1 +" valor temp es "+ + prue); //prueba
+
+	                        try {
+	                        	
+	                            Field field1 = getClass().getDeclaredField(cartaVariableNameN1);
+	                            field1.setAccessible(true);
+	                            Node cartaNode1 = (Node) field1.get(this);
+	                            cartaNode1.setDisable(false);
+	                        	
+	                        } catch (NoSuchFieldException | IllegalAccessException ex) {
+	                            System.out.println("No se pudo acceder al campo especificado: " + cartaVariableNameN1);
+	                            ex.printStackTrace();
+	                        }
+	                    }
+	                }//fin for
+	                System.out.println("----------------------");//prueba
+	                
+	                }); // Hacer visible el nodo después de la pausa
+	                pause.play();
+	                
+	            } 
+	        }catch (NoSuchFieldException | IllegalAccessException e) {
+                System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName);
+                e.printStackTrace();
+            }
 	    }
 	
 	    @FXML
-	    void Fil2Carta3(MouseEvent event) {
-	    	
+	    void Fil2Carta3(MouseEvent event) {	    		       
+    			    	
+	    	//Se asigna el valor a carta actual aleatorio del array resCartas
 	        int varR3 = aleaCartas[2];
+	        int nunCarta1 = resCartas[varR3];
 	        
-    		ptoFil2Carta3.setVisible(false);
+	        //Se almacena el valor de la carta actual en la posicion 6 de la lista carta
+	        Cartas.carta[6].setVal(nunCarta1);
+    		Cartas.carta[6].setTemp(1);
+	        ptoFil2Carta3.setVisible(false);
+	       	      
+            //se deshabilitan cartas sin coincidir fila inferior
+            for (int i = 0; i < Cartas.carta.length -4; i++) {
+                if (Cartas.carta[i].getTemp() == 0) {
+                    
+    	            String cartaVariableName2 = "ptoFil2Carta" + (i + 1);
+    	            int prue = Cartas.carta[i].getTemp();//prueba
+    	            System.out.println("valor temp a bloquear: " + cartaVariableName2 +" es "+ + prue); //prueba
+
+                    try {
+                        Field field2 = getClass().getDeclaredField(cartaVariableName2);
+                        field2.setAccessible(true);
+                        Node cartaNode2 = (Node) field2.get(this);
+                        cartaNode2.setDisable(true);
+                    } catch (NoSuchFieldException | IllegalAccessException e) {
+                        System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName2);
+                        e.printStackTrace();
+                    }
+                }
+            }//fin for
+            System.out.println("----------------------");//prueba
+	     
+            /*
+             * Se inicia verificacion de coincidencia
+             */
+	        int numeroBuscado = 1;
+	        int posic = Cartas.buscarCartaSuperior(numeroBuscado);
+	        int valCartaSup = Cartas.carta[posic].getVal();
+
+	        String cartaVariableName = "ptoFil1Carta" + (posic + 1);
+	        System.out.println("valor carta superior " + cartaVariableName +" es "+ valCartaSup + ", valor carta inferior : " + nunCarta1);//prueba
+
+	        
+	        
+            try {
+	        // Comparar el valor con el de la carta seleccionada en la fila superior
+	        if (nunCarta1 == valCartaSup) {
+	        	
+		        System.out.println("valor carta inferior y superior coinciden");//prueba
+		        
+		     // Se accede a los valores de la lista "puntos"
+		        int acumtotal = Integer.parseInt (puntos.get(0)); // Obtener el valor de "Acumulado" de la lista
+		        int ptosNivel = Integer.parseInt (puntos.get(1)); // Obtener el valor de "puntosnivel1" de la lista
+		        int ptosAvan = Integer.parseInt (puntos.get(2)); // Obtener el valor de "puntosnivel1" de la lista
+		        //String ptoNiv1Str = (puntos.get(1));
+		        		        
+		        // Se incrementa puntos de nivel +10	    
+		        ptosNivel += 10;
+		        ptosAvan +=10;
+		        System.out.println("valor carta inferior y superior coinciden puntos se suma 10 " + ptosNivel);//prueba
+		        //acumtotal = ptosNivel; // Se actualiza acumulado
+		        
+		        // Se guardan en una variable a String
+		        String ptosN1 = Integer.toString(ptosNivel);
+		        String acumN1 = Integer.toString(acumtotal);		        
+		        String avnzN1 = Integer.toString(ptosAvan);
+		        
+		        puntos.set(0, acumN1); // Actualizar el valor de "Acumulado" en la lista
+		        puntos.set(1, ptosN1); // Actualizar el valor de "puntosnivel" en la lista
+		        puntos.set(2, avnzN1); // Actualizar el valor de "puntosnivel" en la lista
+		        
+		        int ptosNivelpr = Integer.parseInt (puntos.get(1)); // Obtener el valor de "puntosnivel1" de la lista
+		        System.out.println("coinciden valor nuevo puntos de nivel " + ptosNivelpr);//prueba
+		        
+		        String ptoNiv1Str = (puntos.get(1));
+	            puntosNivel1.setText(ptoNiv1Str);
+	            totAcumulado.setText(ptoNiv1Str); // @@@ ojo en este nivel acumulado es el mismo valor de puntosNivel1
+
+		        
+		    	 // Carta superior se tomo temporal como 2
+	        	Cartas.carta[posic].setTemp(2);
+		    	//Carta inferior se tomo temporal como 2
+	    		Cartas.carta[6].setTemp(2); //@@@ojo cambiar valor en otras filas de carta[valor carta inferior]
+		    	//Sebloquea carta que coincide inferior
+		        ptoFil2Carta3.setVisible(false);
+		        ptoFil2Carta3.setDisable(true);
+	            
+		        /*
+		         * Se bloquea carta que coincide Superior
+		         */
+                Field field = getClass().getDeclaredField(cartaVariableName);
+                field.setAccessible(true);
+                Node cartaNode = (Node) field.get(this);
+                cartaNode.setVisible(true);
+                cartaNode.setDisable(true);
+                cartaNode.setOpacity(0.05);
+                
+                //se habilitan cartas sin coincidir de la fila superior
+                for (int i = 0; i < Cartas.carta.length -4; i++) {
+                    if (Cartas.carta[i].getTemp() == 0) {
+                    	
+                        String cartaVariableNameN1 = "ptoFil1Carta" + (i + 1);
+                      
+        	            int prue = Cartas.carta[i].getTemp();//prueba
+        	            System.out.println("valor coincide sup a b : " + cartaVariableNameN1 +" es "+ + prue); //prueba      	         
+        	            
+                        try {
+                        	
+                            Field field1 = getClass().getDeclaredField(cartaVariableNameN1);
+                            field1.setAccessible(true);
+                            Node cartaNode1 = (Node) field1.get(this);
+                            cartaNode1.setDisable(false);
+                        	
+                        } catch (NoSuchFieldException | IllegalAccessException e) {
+                            System.out.println("No se pudo acceder al campo especificado: " + cartaVariableNameN1);
+                            e.printStackTrace();
+                        }
+                    }
+                }//fin for
+                System.out.println("----------------------");//prueba
+                
+                //se deshabilitan cartas sin coincidir de la fila inferior
+                for (int x = 4; x < Cartas.carta.length; x++) {
+                    if (Cartas.carta[x].getTemp() == 0) {
+
+                        String cartaVariableName2 = "ptoFil2Carta" + (x -3);
+                        
+        	            int prue = Cartas.carta[x].getTemp();//prueba
+        	            System.out.println("Se bloquean cartas inferiores sin coincidir " + cartaVariableName2 +" y valor temp es "+ + prue); //prueba
+        	            
+                        try {
+                            Field field2 = getClass().getDeclaredField(cartaVariableName2);
+                            field2.setAccessible(true);
+                            Node cartaNode2 = (Node) field2.get(this);
+                            cartaNode2.setDisable(true);
+                        } catch (NoSuchFieldException | IllegalAccessException ex) {
+                            System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName2);
+                            ex.printStackTrace();
+                        }
+                    }
+                }//fin for
+                System.out.println("----------------------");//prueba
+                
+                
+
+ 
+                //Cartas.desbCarta(0);
+                
+	            int prue = Cartas.carta[posic].getVal();
+	            int prue2 = Cartas.carta[posic].getTemp();
+	            System.out.println("valor carta verdadero : " + prue);
+	            System.out.println("valor temp carta verdadero : " + prue2);
+	            
+
+	        } else {
+	        	
+		        System.out.println("valor carta inferior y superior no coinciden");//prueba 
+	            
+		     // Se decrementa puntos de nivel -10	    	    
+		        int acumtotal = Integer.parseInt (puntos.get(0)); // Obtener el valor de "Acumulado" de la lista
+		        int ptosNivel = Integer.parseInt (puntos.get(1)); // Obtener el valor de "puntosnivel1" de la lista
+		        //String ptoNiv1Str = (puntos.get(1));
+		        		        
+		        // Se incrementa puntos de nivel +10	    
+		        ptosNivel -= 10;
+		        System.out.println("valor carta inferior y superior coinciden puntos se suma 10 " + ptosNivel);//prueba
+		        //acumtotal = ptosNivel; // Se actualiza acumulado
+		        
+		        // Se guardan en una variable a String
+		        String ptosN1 = Integer.toString(ptosNivel);
+		        String acumN1 = Integer.toString(acumtotal);
+		        
+		        puntos.set(0, acumN1); // Actualizar el valor de "Acumulado" en la lista
+		        puntos.set(1, ptosN1); // Actualizar el valor de "puntosnivel" en la lista
+		        
+		        int ptosNivelpr = Integer.parseInt (puntos.get(1)); // Obtener el valor de "puntosnivel1" de la lista
+		        System.out.println("coinciden valor nuevo puntos de nivel " + ptosNivelpr);//prueba
+		        
+		        //Se asigna nuevo valor al label puntosNivel1
+		        String ptoNiv1Str = (puntos.get(1));
+	            puntosNivel1.setText(ptoNiv1Str);
+	            totAcumulado.setText(ptoNiv1Str); // @@@ ojo en este nivel acumulado es el mismo valor de puntosNivel1
+
+
+	            Cartas.carta[posic].setTemp(0);
+	    		Cartas.carta[6].setTemp(0);
+
+	            // Obtener el nombre de la variable de la carta correspondiente
+	                Field field = getClass().getDeclaredField(cartaVariableName);
+	                field.setAccessible(true);
+	                Node cartaNode = (Node) field.get(this);
+	                
+	                PauseTransition pause = new PauseTransition(Duration.seconds(5)); // Pausa de 2 segundos
+	                pause.setOnFinished(e -> {
+	                	
+	                	cartaNode.setVisible(true); 
+	                	ptoFil2Carta3.setVisible(true);
+	                	
+	                //se deshabilitan cartas sin coincidir de la fila inferior
+	                for (int x = 4; x < Cartas.carta.length; x++) {
+	                    if (Cartas.carta[x].getTemp() == 0) {
+
+	                        String cartaVariableName2 = "ptoFil2Carta" + (x -3);
+	                        
+	        	            int prue = Cartas.carta[x].getTemp();//prueba
+	        	            System.out.println("Se bloquean cartas inferiores sin coincidir " + cartaVariableName2 +" y valor temp es "+ + prue); //prueba
+	        	            
+	                        try {
+	                            Field field2 = getClass().getDeclaredField(cartaVariableName2);
+	                            field2.setAccessible(true);
+	                            Node cartaNode2 = (Node) field2.get(this);
+	                            cartaNode2.setDisable(true);
+	                        } catch (NoSuchFieldException | IllegalAccessException ex) {
+	                            System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName2);
+	                            ex.printStackTrace();
+	                        }
+	                    }
+	                }//fin for
+	                System.out.println("----------------------");//prueba
+	                
+	                //se habilitan cartas sin coincidir de la fila superior
+	                for (int i = 0; i < Cartas.carta.length -4; i++) { // al bloquear una carta queda un campo de mas en el array
+	                    if (Cartas.carta[i].getTemp() == 0) {
+	                    	
+	                        String cartaVariableNameN1 = "ptoFil1Carta" + (i + 1);
+	           	            int prue = Cartas.carta[i].getTemp();//prueba
+	        	            System.out.println("Se habilitan cartas superiores sin coincidir " + cartaVariableNameN1 +" valor temp es "+ + prue); //prueba
+
+	                        try {
+	                        	
+	                            Field field1 = getClass().getDeclaredField(cartaVariableNameN1);
+	                            field1.setAccessible(true);
+	                            Node cartaNode1 = (Node) field1.get(this);
+	                            cartaNode1.setDisable(false);
+	                        	
+	                        } catch (NoSuchFieldException | IllegalAccessException ex) {
+	                            System.out.println("No se pudo acceder al campo especificado: " + cartaVariableNameN1);
+	                            ex.printStackTrace();
+	                        }
+	                    }
+	                }//fin for
+	                System.out.println("----------------------");//prueba
+	                
+	                }); // Hacer visible el nodo después de la pausa
+	                pause.play();
+	                
+	            } 
+	        }catch (NoSuchFieldException | IllegalAccessException e) {
+                System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName);
+                e.printStackTrace();
+            }
 	    }
 	
 	    @FXML
 	    void Fil2Carta4(MouseEvent event) {
-	    	
+	    	   			    	
+	    	//Se asigna el valor a carta actual aleatorio del array resCartas
 	        int varR4 = aleaCartas[3];
+	        int nunCarta1 = resCartas[varR4];
 	        
-    		ptoFil2Carta4.setVisible(false);	
+	        //Se almacena el valor de la carta actual en la posicion 7 de la lista carta
+	        Cartas.carta[7].setVal(nunCarta1);
+    		Cartas.carta[7].setTemp(1);
+	        ptoFil2Carta4.setVisible(false);
+	       	      
+            //se deshabilitan cartas sin coincidir fila inferior
+            for (int i = 0; i < Cartas.carta.length -4; i++) {
+                if (Cartas.carta[i].getTemp() == 0) {
+                    
+    	            String cartaVariableName2 = "ptoFil2Carta" + (i + 1);
+    	            int prue = Cartas.carta[i].getTemp();//prueba
+    	            System.out.println("valor temp a bloquear: " + cartaVariableName2 +" es "+ + prue); //prueba
+
+                    try {
+                        Field field2 = getClass().getDeclaredField(cartaVariableName2);
+                        field2.setAccessible(true);
+                        Node cartaNode2 = (Node) field2.get(this);
+                        cartaNode2.setDisable(true);
+                    } catch (NoSuchFieldException | IllegalAccessException e) {
+                        System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName2);
+                        e.printStackTrace();
+                    }
+                }
+            }//fin for
+            System.out.println("----------------------");//prueba
+	     
+            /*
+             * Se inicia verificacion de coincidencia
+             */
+	        int numeroBuscado = 1;
+	        int posic = Cartas.buscarCartaSuperior(numeroBuscado);
+	        int valCartaSup = Cartas.carta[posic].getVal();
+
+	        String cartaVariableName = "ptoFil1Carta" + (posic + 1);
+	        System.out.println("valor carta superior " + cartaVariableName +" es "+ valCartaSup + ", valor carta inferior : " + nunCarta1);//prueba
+
+	        
+	        
+            try {
+	        // Comparar el valor con el de la carta seleccionada en la fila superior
+	        if (nunCarta1 == valCartaSup) {
+	        	
+		        System.out.println("valor carta inferior y superior coinciden");//prueba
+		        
+		     // Se accede a los valores de la lista "puntos"
+		        int acumtotal = Integer.parseInt (puntos.get(0)); // Obtener el valor de "Acumulado" de la lista
+		        int ptosNivel = Integer.parseInt (puntos.get(1)); // Obtener el valor de "puntosnivel1" de la lista
+		        int ptosAvan = Integer.parseInt (puntos.get(2)); // Obtener el valor de "puntosnivel1" de la lista
+		        //String ptoNiv1Str = (puntos.get(1));
+		        		        
+		        // Se incrementa puntos de nivel +10	    
+		        ptosNivel += 10;
+		        ptosAvan +=10;
+		        System.out.println("valor carta inferior y superior coinciden puntos se suma 10 " + ptosNivel);//prueba
+		        //acumtotal = ptosNivel; // Se actualiza acumulado
+		        
+		        // Se guardan en una variable a String
+		        String ptosN1 = Integer.toString(ptosNivel);
+		        String acumN1 = Integer.toString(acumtotal);		        
+		        String avnzN1 = Integer.toString(ptosAvan);
+		        
+		        puntos.set(0, acumN1); // Actualizar el valor de "Acumulado" en la lista
+		        puntos.set(1, ptosN1); // Actualizar el valor de "puntosnivel" en la lista
+		        puntos.set(2, avnzN1); // Actualizar el valor de "puntosnivel" en la lista
+		        
+		        int ptosNivelpr = Integer.parseInt (puntos.get(1)); // Obtener el valor de "puntosnivel1" de la lista
+		        System.out.println("coinciden valor nuevo puntos de nivel " + ptosNivelpr);//prueba
+		        
+		        String ptoNiv1Str = (puntos.get(1));
+	            puntosNivel1.setText(ptoNiv1Str);
+	            totAcumulado.setText(ptoNiv1Str); // @@@ ojo en este nivel acumulado es el mismo valor de puntosNivel1
+
+
+		    	 // Carta superior se tomo temporal como 2
+	        	Cartas.carta[posic].setTemp(2);
+		    	//Carta inferior se tomo temporal como 2
+	    		Cartas.carta[7].setTemp(2); //@@@ojo cambiar valor en otras filas de carta[valor carta inferior]
+		    	//Sebloquea carta que coincide inferior
+		        ptoFil2Carta4.setVisible(false);
+		        ptoFil2Carta4.setDisable(true);
+	            
+		        /*
+		         * Se bloquea carta que coincide Superior
+		         */
+                Field field = getClass().getDeclaredField(cartaVariableName);
+                field.setAccessible(true);
+                Node cartaNode = (Node) field.get(this);
+                cartaNode.setVisible(true);
+                cartaNode.setDisable(true);
+                cartaNode.setOpacity(0.05);
+                
+                //se habilitan cartas sin coincidir de la fila superior
+                for (int i = 0; i < Cartas.carta.length -4; i++) {
+                    if (Cartas.carta[i].getTemp() == 0) {
+                    	
+                        String cartaVariableNameN1 = "ptoFil1Carta" + (i + 1);
+                      
+        	            int prue = Cartas.carta[i].getTemp();//prueba
+        	            System.out.println("valor coincide sup a b : " + cartaVariableNameN1 +" es "+ + prue); //prueba      	         
+        	            
+                        try {
+                        	
+                            Field field1 = getClass().getDeclaredField(cartaVariableNameN1);
+                            field1.setAccessible(true);
+                            Node cartaNode1 = (Node) field1.get(this);
+                            cartaNode1.setDisable(false);
+                        	
+                        } catch (NoSuchFieldException | IllegalAccessException e) {
+                            System.out.println("No se pudo acceder al campo especificado: " + cartaVariableNameN1);
+                            e.printStackTrace();
+                        }
+                    }
+                }//fin for
+                System.out.println("----------------------");//prueba
+                
+                //se deshabilitan cartas sin coincidir de la fila inferior
+                for (int x = 4; x < Cartas.carta.length; x++) {
+                    if (Cartas.carta[x].getTemp() == 0) {
+
+                        String cartaVariableName2 = "ptoFil2Carta" + (x -3);
+                        
+        	            int prue = Cartas.carta[x].getTemp();//prueba
+        	            System.out.println("Se bloquean cartas inferiores sin coincidir " + cartaVariableName2 +" y valor temp es "+ + prue); //prueba
+        	            
+                        try {
+                            Field field2 = getClass().getDeclaredField(cartaVariableName2);
+                            field2.setAccessible(true);
+                            Node cartaNode2 = (Node) field2.get(this);
+                            cartaNode2.setDisable(true);
+                        } catch (NoSuchFieldException | IllegalAccessException ex) {
+                            System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName2);
+                            ex.printStackTrace();
+                        }
+                    }
+                }//fin for
+                System.out.println("----------------------");//prueba
+                
+                
+
+ 
+                //Cartas.desbCarta(0);
+                
+	            int prue = Cartas.carta[posic].getVal();
+	            int prue2 = Cartas.carta[posic].getTemp();
+	            System.out.println("valor carta verdadero : " + prue);
+	            System.out.println("valor temp carta verdadero : " + prue2);
+	            
+
+	        } else {
+	        	
+		        System.out.println("valor carta inferior y superior no coinciden");//prueba	            
+
+		     // Se decrementa puntos de nivel -10	    	    
+		        int acumtotal = Integer.parseInt (puntos.get(0)); // Obtener el valor de "Acumulado" de la lista
+		        int ptosNivel = Integer.parseInt (puntos.get(1)); // Obtener el valor de "puntosnivel1" de la lista
+		        //String ptoNiv1Str = (puntos.get(1));
+		        		        
+		        // Se incrementa puntos de nivel +10	    
+		        ptosNivel -= 10;
+		        System.out.println("valor carta inferior y superior coinciden puntos se suma 10 " + ptosNivel);//prueba
+		        //acumtotal = ptosNivel; // Se actualiza acumulado
+		        
+		        // Se guardan en una variable a String
+		        String ptosN1 = Integer.toString(ptosNivel);
+		        String acumN1 = Integer.toString(acumtotal);
+		        
+		        puntos.set(0, acumN1); // Actualizar el valor de "Acumulado" en la lista
+		        puntos.set(1, ptosN1); // Actualizar el valor de "puntosnivel" en la lista
+		        
+		        int ptosNivelpr = Integer.parseInt (puntos.get(1)); // Obtener el valor de "puntosnivel1" de la lista
+		        System.out.println("coinciden valor nuevo puntos de nivel " + ptosNivelpr);//prueba
+		        
+		        //Se asigna nuevo valor al label puntosNivel1
+		        String ptoNiv1Str = (puntos.get(1));
+	            puntosNivel1.setText(ptoNiv1Str);
+	            totAcumulado.setText(ptoNiv1Str); // @@@ ojo en este nivel acumulado es el mismo valor de puntosNivel1
+
+		        
+	            Cartas.carta[posic].setTemp(0);
+	    		Cartas.carta[7].setTemp(0);
+
+	            // Obtener el nombre de la variable de la carta correspondiente
+	                Field field = getClass().getDeclaredField(cartaVariableName);
+	                field.setAccessible(true);
+	                Node cartaNode = (Node) field.get(this);
+	                
+	                PauseTransition pause = new PauseTransition(Duration.seconds(5)); // Pausa de 2 segundos
+	                pause.setOnFinished(e -> {
+	                	
+	                	cartaNode.setVisible(true); 
+	                	ptoFil2Carta4.setVisible(true);
+	                	
+	                //se deshabilitan cartas sin coincidir de la fila inferior
+	                for (int x = 4; x < Cartas.carta.length; x++) {
+	                    if (Cartas.carta[x].getTemp() == 0) {
+
+	                        String cartaVariableName2 = "ptoFil2Carta" + (x -3);
+	                        
+	        	            int prue = Cartas.carta[x].getTemp();//prueba
+	        	            System.out.println("Se bloquean cartas inferiores sin coincidir " + cartaVariableName2 +" y valor temp es "+ + prue); //prueba
+	        	            
+	                        try {
+	                            Field field2 = getClass().getDeclaredField(cartaVariableName2);
+	                            field2.setAccessible(true);
+	                            Node cartaNode2 = (Node) field2.get(this);
+	                            cartaNode2.setDisable(true);
+	                        } catch (NoSuchFieldException | IllegalAccessException ex) {
+	                            System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName2);
+	                            ex.printStackTrace();
+	                        }
+	                    }
+	                }//fin for
+	                System.out.println("----------------------");//prueba
+	                
+	                //se habilitan cartas sin coincidir de la fila superior
+	                for (int i = 0; i < Cartas.carta.length -4; i++) { // al bloquear una carta queda un campo de mas en el array
+	                    if (Cartas.carta[i].getTemp() == 0) {
+	                    	
+	                        String cartaVariableNameN1 = "ptoFil1Carta" + (i + 1);
+	           	            int prue = Cartas.carta[i].getTemp();//prueba
+	        	            System.out.println("Se habilitan cartas superiores sin coincidir " + cartaVariableNameN1 +" valor temp es "+ + prue); //prueba
+
+	                        try {
+	                        	
+	                            Field field1 = getClass().getDeclaredField(cartaVariableNameN1);
+	                            field1.setAccessible(true);
+	                            Node cartaNode1 = (Node) field1.get(this);
+	                            cartaNode1.setDisable(false);
+	                        	
+	                        } catch (NoSuchFieldException | IllegalAccessException ex) {
+	                            System.out.println("No se pudo acceder al campo especificado: " + cartaVariableNameN1);
+	                            ex.printStackTrace();
+	                        }
+	                    }
+	                }//fin for
+	                System.out.println("----------------------");//prueba
+	                
+	                }); // Hacer visible el nodo después de la pausa
+	                pause.play();
+	                
+	            } 
+	        }catch (NoSuchFieldException | IllegalAccessException e) {
+                System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName);
+                e.printStackTrace();
+            }
 
 	    }
 	
 	    @FXML
-	    void btnAvanzar2(ActionEvent event) {
+	    void btnAvanzar2(ActionEvent event) throws IOException {
+	    	int ptosAvan = Integer.parseInt (puntos.get(2));
+	    	System.out.println("puntos alcanzado para avanzar " + ptosAvan );
+	    	if (ptosAvan ==40) {
 	    	
+		    	System.out.println("Nivel alcanzado, nivel en construccion");
+
+	    	}
+	    	else {
+
+	    		System.out.println("Nivel no alcanzado");
+	    	}
+            /*
+	    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/VistaNivel1C2.fxml"));
+	    	Parent root = loader.load();
+	    	Scene scene = new Scene(root);
+	    	nivelActual1.setScene(scene);
+	      	VistaNivel1C2Controller controller = loader.getController();
+	    	controller.init(obtUsuario.getText(), labEdadn1.getText(), nivelActual1, this);
+	    	nivelActual1.show();
+	    	*/
+
 	    }
         
 
@@ -534,7 +1524,13 @@ public class VistaNivel1Controller {
 		this.nivelActual1 = bienve;
 		this.obtUsuario.setText(text);
 		this.labEdadn1.setText(text2);
-
+		
+        //Se accede a los valores de la lista "puntos"		
+		String ptoNiv1Str = (puntos.get(1));
+        puntosNivel1.setText(ptoNiv1Str);
+        totAcumulado.setText(ptoNiv1Str);
+        
+        
 		
 		//valores operacion carta 1 fila 1
         int var1 = aleatorio[0];
@@ -542,7 +1538,7 @@ public class VistaNivel1Controller {
         int var3 = aleatorio[2];
         int num1 = resultado[0];
         int num2 = resultado[1];
-        int resul = resultado [4];
+        //int resul = resultado [4];
         int num3 = resultado[var1];
         int num4 = resultado[var2];
         int num5 = resultado[var3];
@@ -561,7 +1557,7 @@ public class VistaNivel1Controller {
         int var13 = aleatorio1[2];
         int num11 = resultado1[0];
         int num12 = resultado1[1];
-        int resul1 = resultado1 [4];
+        //int resul1 = resultado1 [4];
         int num13 = resultado1[var11];
         int num14 = resultado1[var12];
         int num15 = resultado1[var13];
@@ -579,7 +1575,7 @@ public class VistaNivel1Controller {
         int var23 = aleatorio2[2];
         int num21 = resultado2[0];
         int num22 = resultado2[1];
-        int resul2 = resultado2 [4];
+        //int resul2 = resultado2 [4];
         int num23 = resultado2[var21];
         int num24 = resultado2[var22];
         int num25 = resultado2[var23];
@@ -598,7 +1594,7 @@ public class VistaNivel1Controller {
         int var33 = aleatorio3[2];
         int num31 = resultado3[0];
         int num32 = resultado3[1];
-        int resul3 = resultado3 [4];
+        //int resul3 = resultado3 [4];
         int num33 = resultado3[var31];
         int num34 = resultado3[var32];
         int num35 = resultado3[var33];

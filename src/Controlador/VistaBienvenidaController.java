@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import application.alertaGeneral;
 import application.conectarBase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,13 +32,13 @@ public class VistaBienvenidaController {
     @FXML
     void btoIniciarJuego(ActionEvent event) throws IOException {
     	
-    	 String nombre = nombreBienvenido.getText();
+    	 //String nombre = nombreBienvenido.getText();
     	 String edad = labEdad.getText();
     	 int edadInt = Integer.parseInt(edad);
     	 
     	 
     	 
-    	 if (edadInt > 1 && edadInt <= 9) {
+    	 if (edadInt >= 1 && edadInt < 9) {
 
     	    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/VistaNivel1.fxml"));
     	    	Parent root = loader.load();
@@ -48,9 +50,9 @@ public class VistaBienvenidaController {
     	    	controller.init(nombreBienvenido.getText(), labEdad.getText(), Bienve, this);
     	    	Bienve.show();
     		 
-    		 
-    	 }else if(edadInt >= 9 && edadInt <= 12) {
-    		 FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/vistaNivel1C2.fxml"));
+    		 //&& edadInt <= 12
+    	 }else if(edadInt >= 9 ) {
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/vistaNivel1C2.fxml"));
  	    	Parent root = loader.load();
  	    	Scene scene = new Scene(root);
  	    	Bienve.setScene(scene);
@@ -66,9 +68,11 @@ public class VistaBienvenidaController {
     	 }
     	
     }
-    }
+    
         
-
+    /*
+     * Seleccion de niveles
+     */
 	public void init(String text, String string, Stage stage2, VistaRegistroController vistaRegistroController) {
 
 		this.Bienve = stage2;
@@ -103,9 +107,6 @@ public class VistaBienvenidaController {
 		}
 	}
 
-
-
-    
 
 
 

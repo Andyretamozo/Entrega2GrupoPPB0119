@@ -124,12 +124,12 @@
             <Font name="Kristen ITC" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="totAcumulado" layoutX="1142.0" layoutY="72.0" prefHeight="32.0" prefWidth="51.0" text="0" textFill="WHITE">
+      <Label fx:id="totAcumulado" layoutX="1142.0" layoutY="72.0" prefHeight="32.0" prefWidth="51.0" textFill="WHITE">
          <font>
             <Font name="Jokerman" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="puntosNivel1" layoutX="1145.0" layoutY="111.0" text="100" textFill="WHITE">
+      <Label fx:id="puntosNivel1" layoutX="1145.0" layoutY="111.0" textFill="WHITE">
          <font>
             <Font name="Jokerman" size="18.0" />
          </font>
@@ -329,7 +329,7 @@
             </DropShadow>
          </effect>
       </VBox>
-      <ImageView fx:id="ptoFil2Carta1" fitHeight="196.0" fitWidth="165.0" layoutX="206.0" layoutY="433.0" onMouseClicked="#Fil2Carta1" opacity="0.96" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="ptoFil2Carta1" disable="true" fitHeight="196.0" fitWidth="165.0" layoutX="206.0" layoutY="433.0" onMouseClicked="#Fil2Carta1" opacity="0.96" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../Recursos/envCarta.png" />
          </image>
@@ -358,7 +358,7 @@
             </DropShadow>
          </effect>
       </VBox>
-      <ImageView fx:id="ptoFil2Carta2" fitHeight="196.0" fitWidth="165.0" layoutX="442.0" layoutY="433.0" onMouseClicked="#Fil2Carta2" opacity="0.96" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="ptoFil2Carta2" disable="true" fitHeight="196.0" fitWidth="165.0" layoutX="442.0" layoutY="433.0" onMouseClicked="#Fil2Carta2" opacity="0.96" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../Recursos/envCarta.png" />
          </image>
@@ -387,7 +387,7 @@
             </DropShadow>
          </effect>
       </VBox>
-      <ImageView fx:id="ptoFil2Carta3" fitHeight="196.0" fitWidth="165.0" layoutX="678.0" layoutY="433.0" onMouseClicked="#Fil2Carta3" opacity="0.96" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="ptoFil2Carta3" disable="true" fitHeight="196.0" fitWidth="165.0" layoutX="678.0" layoutY="433.0" onMouseClicked="#Fil2Carta3" opacity="0.96" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../Recursos/envCarta.png" />
          </image>
@@ -416,7 +416,7 @@
             </DropShadow>
          </effect>
       </VBox>
-      <ImageView fx:id="ptoFil2Carta4" fitHeight="196.0" fitWidth="165.0" layoutX="914.0" layoutY="433.0" onMouseClicked="#Fil2Carta4" opacity="0.96" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="ptoFil2Carta4" disable="true" fitHeight="196.0" fitWidth="165.0" layoutX="914.0" layoutY="433.0" onMouseClicked="#Fil2Carta4" opacity="0.96" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../Recursos/envCarta.png" />
          </image>

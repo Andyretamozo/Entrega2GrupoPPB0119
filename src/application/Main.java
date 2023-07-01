@@ -9,7 +9,9 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
-
+/*
+ * Somo Poli
+ */
 
 public class Main extends Application {
 	@Override

@@ -60,6 +60,7 @@ public class Cartas {
             carta[i].setBloq(false);
             carta[i].setToFront(95);
         }
+        
 		
 	}
 	
@@ -72,6 +73,7 @@ public class Cartas {
         return 0; 
     }
     
+    
     public static void desbCarta(int x) {
         for (int i = 0; i < carta.length; i++) {
             if (carta[i].getTemp() == x) { // Cambio en la condición de igualdad
@@ -79,6 +81,29 @@ public class Cartas {
 
             }
         }
+    }
+    
+    public void obtenerTresVariables(int puntos) {
+    for (int x = puntos; x < Cartas.carta.length-1; x++) {
+        if (Cartas.carta[x].getTemp() == 0) {
+
+            String cartaVariableName2 = "ptoFil2Carta" + (x -2);
+            
+            int prue = Cartas.carta[x].getTemp();//prueba
+            System.out.println("valor temp : " + cartaVariableName2 +" es "+ + prue); //prueba
+            
+            try {
+                Field field2 = getClass().getDeclaredField(cartaVariableName2);
+                field2.setAccessible(true);
+                Node cartaNode2 = (Node) field2.get(this);
+                cartaNode2.setDisable(true);
+            } catch (NoSuchFieldException | IllegalAccessException ex) {
+                System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName2);
+                ex.printStackTrace();
+            }
+        }
+    }//fin for
+    
     }
     
    /*
