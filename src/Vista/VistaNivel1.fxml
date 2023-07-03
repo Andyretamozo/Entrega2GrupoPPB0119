@@ -100,7 +100,7 @@
             <Image url="@../../Recursos/titulo.png" />
          </image>
       </ImageView>
-      <Button fx:id="avanzar" layoutX="545.0" layoutY="687.0" mnemonicParsing="false" onAction="#btnAvanzar2" prefHeight="50.0" prefWidth="190.0" style="-fx-background-color: D9D9D9;" text="Avanzar" textFill="#064a8f">
+      <Button fx:id="btnAvanzar" layoutX="545.0" layoutY="687.0" mnemonicParsing="false" onAction="#btnAvanzar" prefHeight="50.0" prefWidth="190.0" style="-fx-background-color: D9D9D9;" text="Avanzar" textFill="#064a8f">
          <font>
             <Font size="36.0" />
          </font>
@@ -141,7 +141,7 @@
                   <Font name="System Bold Italic" size="18.0" />
                </font>
             </Label>
-            <RadioButton fx:id="car1btn1" mnemonicParsing="false" prefHeight="19.0" prefWidth="144.0" selected="true" textFill="WHITE">
+            <RadioButton fx:id="rad1Car" mnemonicParsing="false" prefHeight="19.0" prefWidth="144.0" selected="true" textFill="WHITE">
                <font>
                   <Font name="Consolas Bold Italic" size="14.0" />
                </font>
@@ -149,12 +149,12 @@
                   <ToggleGroup fx:id="btnsF1C1" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="car1btn2" mnemonicParsing="false" prefHeight="19.0" prefWidth="143.0" textFill="WHITE" toggleGroup="$btnsF1C1">
+            <RadioButton fx:id="rad2Car" mnemonicParsing="false" prefHeight="19.0" prefWidth="143.0" textFill="WHITE" toggleGroup="$btnsF1C1">
                <font>
                   <Font name="Consolas Bold Italic" size="14.0" />
                </font>
             </RadioButton>
-            <RadioButton fx:id="car1btn3" mnemonicParsing="false" prefHeight="19.0" prefWidth="151.0" textFill="WHITE" toggleGroup="$btnsF1C1">
+            <RadioButton fx:id="rad3Car" mnemonicParsing="false" prefHeight="19.0" prefWidth="151.0" textFill="WHITE" toggleGroup="$btnsF1C1">
                <font>
                   <Font name="Consolas Bold Italic" size="14.0" />
                </font>
@@ -183,7 +183,7 @@
                   <Font name="System Bold Italic" size="18.0" />
                </font>
             </Label>
-            <RadioButton fx:id="car2btn1" mnemonicParsing="false" prefHeight="19.0" prefWidth="136.0" textFill="WHITE">
+            <RadioButton fx:id="rad1Car" mnemonicParsing="false" prefHeight="19.0" prefWidth="136.0" textFill="WHITE">
                <font>
                   <Font name="Consolas Bold Italic" size="14.0" />
                </font>
@@ -191,12 +191,12 @@
                   <ToggleGroup fx:id="btnsF1C2" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="car2btn2" mnemonicParsing="false" prefWidth="136.0" selected="true" textFill="WHITE" toggleGroup="$btnsF1C2">
+            <RadioButton fx:id="rad2Car" mnemonicParsing="false" prefWidth="136.0" selected="true" textFill="WHITE" toggleGroup="$btnsF1C2">
                <font>
                   <Font name="Consolas Bold Italic" size="14.0" />
                </font>
             </RadioButton>
-            <RadioButton fx:id="car2btn3" mnemonicParsing="false" prefWidth="136.0" textFill="WHITE" toggleGroup="$btnsF1C2">
+            <RadioButton fx:id="rad3Car" mnemonicParsing="false" prefWidth="136.0" textFill="WHITE" toggleGroup="$btnsF1C2">
                <font>
                   <Font name="Consolas Bold Italic" size="14.0" />
                </font>
@@ -225,7 +225,7 @@
                   <Font name="System Bold Italic" size="18.0" />
                </font>
             </Label>
-            <RadioButton fx:id="car3btn1" mnemonicParsing="false" prefWidth="136.0" textFill="WHITE">
+            <RadioButton fx:id="rad1Car" mnemonicParsing="false" prefWidth="136.0" textFill="WHITE">
                <font>
                   <Font name="Consolas Bold Italic" size="14.0" />
                </font>
@@ -233,12 +233,12 @@
                   <ToggleGroup fx:id="btnsF1C3" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="car3btn2" mnemonicParsing="false" prefWidth="136.0" textFill="WHITE" toggleGroup="$btnsF1C3">
+            <RadioButton fx:id="rad2Car" mnemonicParsing="false" prefWidth="136.0" textFill="WHITE" toggleGroup="$btnsF1C3">
                <font>
                   <Font name="Consolas Bold Italic" size="14.0" />
                </font>
             </RadioButton>
-            <RadioButton fx:id="car3btn3" mnemonicParsing="false" prefWidth="136.0" selected="true" textFill="WHITE" toggleGroup="$btnsF1C3">
+            <RadioButton fx:id="rad3Car" mnemonicParsing="false" prefWidth="136.0" selected="true" textFill="WHITE" toggleGroup="$btnsF1C3">
                <font>
                   <Font name="Consolas Bold Italic" size="14.0" />
                </font>
@@ -267,7 +267,7 @@
                   <Font name="System Bold Italic" size="18.0" />
                </font>
             </Label>
-            <RadioButton fx:id="car4btn1" mnemonicParsing="false" prefWidth="136.0" selected="true" textFill="WHITE">
+            <RadioButton fx:id="rad1Car" mnemonicParsing="false" prefWidth="136.0" selected="true" textFill="WHITE">
                <font>
                   <Font name="Consolas Bold Italic" size="14.0" />
                </font>
@@ -275,12 +275,12 @@
                   <ToggleGroup fx:id="btnsF1C4" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="car4btn2" mnemonicParsing="false" prefWidth="136.0" textFill="WHITE" toggleGroup="$btnsF1C4">
+            <RadioButton fx:id="rad2Car" mnemonicParsing="false" prefWidth="136.0" textFill="WHITE" toggleGroup="$btnsF1C4">
                <font>
                   <Font name="Consolas Bold Italic" size="14.0" />
                </font>
             </RadioButton>
-            <RadioButton fx:id="car4btn3" mnemonicParsing="false" prefWidth="136.0" textFill="WHITE" toggleGroup="$btnsF1C4">
+            <RadioButton fx:id="rad3Car" mnemonicParsing="false" prefWidth="136.0" textFill="WHITE" toggleGroup="$btnsF1C4">
                <font>
                   <Font name="Consolas Bold Italic" size="14.0" />
                </font>

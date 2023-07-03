@@ -3,6 +3,9 @@ package application;
 import java.lang.reflect.Field;
 
 import javafx.scene.Node;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 
 public class Cartas {
 	
@@ -106,68 +109,30 @@ public class Cartas {
     
     }
     
-   /*
     
-    public void obtenerTresVariables(String nombre1, String nombre2, String nombre3) {
-    	
-    	
-        try {
-            Field field1 = getClass().getDeclaredField(nombre1);
-            field1.setAccessible(true);
-            Node variable1 = (Node) field1.get(this);
-            variable1.setVisible(true);
-            
-            Field field2 = getClass().getDeclaredField(nombre2);
-            field2.setAccessible(true);
-            Node variable2 = (Node) field2.get(this);
-            variable2.setVisible(true);
-            
-            Field field3 = getClass().getDeclaredField(nombre3);
-            field3.setAccessible(true);
-            Node variable3 = (Node) field3.get(this);
-            variable3.setVisible(true);
-            
-            // Puedes realizar otras operaciones con las variables obtenidas
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            System.out.println("No se pudo acceder al campo especificado.");
-            e.printStackTrace();
+    public static void asignarValorRadCar(ToggleGroup grupo,String rad, int valor) {
+        for (Toggle toggle : grupo.getToggles()) {
+            if (toggle instanceof RadioButton &&((RadioButton) toggle).getId().equals(rad))  {
+                RadioButton radioButton = (RadioButton) toggle;
+                radioButton.setText(String.valueOf(valor));
+                System.out.println("valores de radio " + valor);
+                break;
+            }
         }
     }
     
+    public static int obtenerValorRadCar(ToggleGroup grupo) {
+    int resul= 0;
+	Toggle selbtnsF1C = grupo.getSelectedToggle();
+	if (selbtnsF1C instanceof RadioButton) {
+	    RadioButton selRadBtn = (RadioButton) selbtnsF1C;
+	    String valorSeleccionado = selRadBtn.getText();
+	    resul= Integer.parseInt(valorSeleccionado);
+	    System.out.println("Valor seleccionado: " + valorSeleccionado);
+	}
+	return resul;
+    }
     
-    
-    public  void desableCartas(int r) {
-
-        for (int i = 0; i < carta.length; i++) {
-            if (carta[i].getTemp() == r) {
-                carta[i].setBloq(true);
-                String cartaVariableName = "ptoFil1Carta" + (i + 1);
-
-                try {
-                    Field field = getClass().getDeclaredField(cartaVariableName);
-                    field.setAccessible(true);
-                    Node cartaNode = (Node) field.get(this);
-                    cartaNode.setDisable(true);
-                } catch (NoSuchFieldException | IllegalAccessException e) {
-                    System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName);
-                    e.printStackTrace();
-                }
-            }
-        }
-        
-
-
-    	}*/
-
-
-
-
-
-
-
-
-
-    	
 
 
 

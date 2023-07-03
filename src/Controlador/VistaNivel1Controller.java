@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import application.Cartas;
 import application.Operacion;
+import application.alertaGeneral;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,17 +17,20 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class VistaNivel1Controller {
  
-
 		Stage nivelActual1;
 
 		@FXML
-	    private Button avanzar;
+	    private Button btnAvanzar;
 	
 	    @FXML
 	    private ToggleGroup btnsF1C1;
@@ -41,40 +45,13 @@ public class VistaNivel1Controller {
 	    private ToggleGroup btnsF1C4;
 	    
 	    @FXML
-	    private RadioButton car1btn1;
+	    private RadioButton rad1Car;
 
 	    @FXML
-	    private RadioButton car1btn2;
+	    private RadioButton rad2Car;
 
 	    @FXML
-	    private RadioButton car1btn3;
-
-	    @FXML
-	    private RadioButton car2btn1;
-
-	    @FXML
-	    private RadioButton car2btn2;
-
-	    @FXML
-	    private RadioButton car2btn3;
-
-	    @FXML
-	    private RadioButton car3btn1;
-
-	    @FXML
-	    private RadioButton car3btn2;
-
-	    @FXML
-	    private RadioButton car3btn3;
-
-	    @FXML
-	    private RadioButton car4btn1;
-
-	    @FXML
-	    private RadioButton car4btn2;
-
-	    @FXML
-	    private RadioButton car4btn3;
+	    private RadioButton rad3Car;
 	    
 	    @FXML
 	    private VBox vBox1;
@@ -207,18 +184,16 @@ public class VistaNivel1Controller {
 	             
 	    @FXML
 	    void Fil1Carta1(MouseEvent event) {
-	    	
+	    		    		    	
 	    	//Se invoca metodo Crear cartas con la instancia creada de la clase Cartas
     		actCarta.crearCartas(); 
-    		
-    		//Valor de la carta
+    		    		
 	        int resul = resultado [4];
-            System.out.println("valor carta superior es: " + resul);
+            System.out.println("valor real de la carta superior es: " + resul);
 	        
             //Se almacenan datos de las cartas en el array	        
     		Cartas.carta[0].setVal(resul); // valor es resul @@6@ ojo cambiar
     		Cartas.carta[0].setTemp(1);
-            //Cartas.desbCarta(0);
             
     		//Se asignan valores iniciales de la carta actual
     		boolean cv1 = Cartas.carta[0].isVis();
@@ -509,17 +484,38 @@ public class VistaNivel1Controller {
 	     
             /*
              * Se inicia verificacion de coincidencia
-             */
+             */ 
+    		//int resul= Cartas.obtenerValorRadCar(btnsF1C1);
+            
 	        int numeroBuscado = 1;
 	        int posic = Cartas.buscarCartaSuperior(numeroBuscado);
 	        int valCartaSup = Cartas.carta[posic].getVal();
+	        	        	        
+	        /*
+	         * Valor de la carta superior se toma segun el radioButton seleccionado
+	         * Se invoca el metodo obtenerValorRadCar de la clase Cartas para obtener el valor 
+	         * segun la carta superior seleccionada
+	         */   		      
+	        int resul = 0;
+    		if (posic==0) {
+    			resul= Cartas.obtenerValorRadCar(btnsF1C1);
+    		}else if (posic==1) {
+        		resul= Cartas.obtenerValorRadCar(btnsF1C2);
+    		}else if (posic==2) {
+        		resul= Cartas.obtenerValorRadCar(btnsF1C3);
+     		}else if (posic==3) {
+        		resul= Cartas.obtenerValorRadCar(btnsF1C4);
+      		}
+	        
 
+    		//Se obtiene la carta que se selecciono en la fila supeior y el vBox
 	        String cartaVariableName = "ptoFil1Carta" + (posic + 1);
-	        System.out.println("valor carta superior " + cartaVariableName +" es "+ valCartaSup + ", valor carta inferior : " + nunCarta1);//prueba
+	        String cartaVboxColor = "vBox" + (posic + 1);
+	        System.out.println("valor seleccionado carta superior " + cartaVariableName +" es "+ resul + ", valor carta inferior : " + nunCarta1);//prueba
 	        	        
             try {
 	        // Comparar el valor con el de la carta seleccionada en la fila superior
-	        if (nunCarta1 == valCartaSup) {
+	        if (nunCarta1 == valCartaSup && valCartaSup == resul) {
 	        	
 		        System.out.println("valor carta inferior y superior coinciden");//prueba
 		        
@@ -556,8 +552,8 @@ public class VistaNivel1Controller {
 		    	 // Carta superior se tomo temporal como 2
 	        	Cartas.carta[posic].setTemp(2);
 		    	//Carta inferior se tomo temporal como 2
-	    		Cartas.carta[4].setTemp(2); //@@@ojo cambiar valor en otras filas de carta[valor carta inferior]
-		    	//Sebloquea carta que coincide inferior
+	    		Cartas.carta[4].setTemp(2); 
+		    	//Se bloquea carta que coincide inferior
 		        ptoFil2Carta1.setVisible(false);
 		        ptoFil2Carta1.setDisable(true);
 	            
@@ -567,9 +563,23 @@ public class VistaNivel1Controller {
                 Field field = getClass().getDeclaredField(cartaVariableName);
                 field.setAccessible(true);
                 Node cartaNode = (Node) field.get(this);
-                cartaNode.setVisible(true);
+                cartaNode.setVisible(false);
                 cartaNode.setDisable(true);
-                cartaNode.setOpacity(0.05);
+                
+                /*
+                 * Cambio del color de la carta vBox
+                 */
+                //Se crea el color
+                Color colorPersonalizado = Color.rgb(143, 57, 144);
+                // Se asigna el color carta inferior
+				vBox5.setBackground(new Background(new BackgroundFill(colorPersonalizado, null, null)));
+
+                //Se asigna el color carta superior
+                Field fieldBox = getClass().getDeclaredField(cartaVboxColor);
+                fieldBox.setAccessible(true);
+                Node vBoxNode = (Node) fieldBox.get(this);
+                ((Region) vBoxNode).setBackground(new Background(new BackgroundFill(colorPersonalizado, null, null)));
+                
                 
                 //se habilitan cartas sin coincidir de la fila superior
                 for (int i = 0; i < Cartas.carta.length -4; i++) {
@@ -616,12 +626,15 @@ public class VistaNivel1Controller {
                         }
                     }
                 }//fin for
-                System.out.println("----------------------");//prueba
+                System.out.println("----------------------");//prueba 
                 
-                
+                //Se habilita boton avanzar
+            	ptosAvan = Integer.parseInt (puntos.get(2));
+            	if (ptosAvan==40) {
+            		alertaGeneral.showAlert("Nivel Alcanzado", "Puedes avanzar de nivel");
+            		   btnAvanzar.setDisable(false);
+            	}
 
- 
-                //Cartas.desbCarta(0);
                 
 	            int prue = Cartas.carta[posic].getVal();
 	            int prue2 = Cartas.carta[posic].getTemp();
@@ -636,12 +649,10 @@ public class VistaNivel1Controller {
 			    // Se decrementa puntos de nivel -10	    	    
 		        int acumtotal = Integer.parseInt (puntos.get(0)); // Obtener el valor de "Acumulado" de la lista
 		        int ptosNivel = Integer.parseInt (puntos.get(1)); // Obtener el valor de "puntosnivel1" de la lista
-		        //String ptoNiv1Str = (puntos.get(1));
 		        		        
 		        // Se incrementa puntos de nivel +10	    
 		        ptosNivel -= 10;
 		        System.out.println("valor carta inferior y superior coinciden puntos se suma 10 " + ptosNivel);//prueba
-		        //acumtotal = ptosNivel; // Se actualiza acumulado
 		        
 		        // Se guardan en una variable a String
 		        String ptosN1 = Integer.toString(ptosNivel);
@@ -658,7 +669,6 @@ public class VistaNivel1Controller {
 	            puntosNivel1.setText(ptoNiv1Str);
 	            totAcumulado.setText(ptoNiv1Str); // @@@ ojo en este nivel acumulado es el mismo valor de puntosNivel1
 	            
-
 	            Cartas.carta[posic].setTemp(0);
 	    		Cartas.carta[4].setTemp(0);
 
@@ -769,15 +779,32 @@ public class VistaNivel1Controller {
 	        int numeroBuscado = 1;
 	        int posic = Cartas.buscarCartaSuperior(numeroBuscado);
 	        int valCartaSup = Cartas.carta[posic].getVal();
+	        
+	        /*
+	         * Valor de la carta superior se toma segun el radioButton seleccionado
+	         * Se invoca el metodo obtenerValorRadCar de la clase Cartas para obtener el valor 
+	         * segun la carta superior seleccionada
+	         */   		      
+	        int resul = 0;
+    		if (posic==0) {
+    			resul= Cartas.obtenerValorRadCar(btnsF1C1);
+    		}else if (posic==1) {
+        		resul= Cartas.obtenerValorRadCar(btnsF1C2);
+    		}else if (posic==2) {
+        		resul= Cartas.obtenerValorRadCar(btnsF1C3);
+     		}else if (posic==3) {
+        		resul= Cartas.obtenerValorRadCar(btnsF1C4);
+      		}
 
+    		//Se obtiene la carta que se selecciono en la fila supeior y el vBox
 	        String cartaVariableName = "ptoFil1Carta" + (posic + 1);
+	        String cartaVboxColor = "vBox" + (posic + 1);
 	        System.out.println("valor carta superior " + cartaVariableName +" es "+ valCartaSup + ", valor carta inferior : " + nunCarta1);//prueba
 
-	        
-	        
+	        	        
             try {
 	        // Comparar el valor con el de la carta seleccionada en la fila superior
-	        if (nunCarta1 == valCartaSup) {
+	        if (nunCarta1 == valCartaSup  && valCartaSup == resul) {
 	        	
 		        System.out.println("valor carta inferior y superior coinciden");//prueba
 		        
@@ -785,13 +812,11 @@ public class VistaNivel1Controller {
 		        int acumtotal = Integer.parseInt (puntos.get(0)); // Obtener el valor de "Acumulado" de la lista
 		        int ptosNivel = Integer.parseInt (puntos.get(1)); // Obtener el valor de "puntosnivel1" de la lista
 		        int ptosAvan = Integer.parseInt (puntos.get(2)); // Obtener el valor de "puntosnivel1" de la lista
-		        //String ptoNiv1Str = (puntos.get(1));
 		        		        
 		        // Se incrementa puntos de nivel +10	    
 		        ptosNivel += 10;
 		        ptosAvan +=10;
 		        System.out.println("valor carta inferior y superior coinciden puntos se suma 10 " + ptosNivel);//prueba
-		        //acumtotal = ptosNivel; // Se actualiza acumulado
 		        
 		        // Se guardan en una variable a String
 		        String ptosN1 = Integer.toString(ptosNivel);
@@ -813,8 +838,8 @@ public class VistaNivel1Controller {
 		    	 // Carta superior se tomo temporal como 2
 	        	Cartas.carta[posic].setTemp(2);
 		    	//Carta inferior se tomo temporal como 2
-	    		Cartas.carta[5].setTemp(2); //@@@ojo cambiar valor en otras filas de carta[valor carta inferior]
-		    	//Sebloquea carta que coincide inferior
+	    		Cartas.carta[5].setTemp(2);
+		    	//Se bloquea carta que coincide inferior
 		        ptoFil2Carta2.setVisible(false);
 		        ptoFil2Carta2.setDisable(true);
 	            
@@ -824,9 +849,24 @@ public class VistaNivel1Controller {
                 Field field = getClass().getDeclaredField(cartaVariableName);
                 field.setAccessible(true);
                 Node cartaNode = (Node) field.get(this);
-                cartaNode.setVisible(true);
+                cartaNode.setVisible(false);
                 cartaNode.setDisable(true);
                 cartaNode.setOpacity(0.05);
+                
+                /*
+                 * Cambio del color de la carta vBox
+                 */
+                //Se crea el color
+                Color colorPersonalizado = Color.rgb(35, 33, 64);
+                // se asigna el color carta inferior
+				vBox6.setBackground(new Background(new BackgroundFill(colorPersonalizado, null, null)));
+
+                //Se asigna el color carta superior
+                Field fieldBox = getClass().getDeclaredField(cartaVboxColor);
+                fieldBox.setAccessible(true);
+                Node vBoxNode = (Node) fieldBox.get(this);
+                ((Region) vBoxNode).setBackground(new Background(new BackgroundFill(colorPersonalizado, null, null)));
+   
                 
                 //se habilitan cartas sin coincidir de la fila superior
                 for (int i = 0; i < Cartas.carta.length -4; i++) {
@@ -872,12 +912,14 @@ public class VistaNivel1Controller {
                         }
                     }
                 }//fin for
-                System.out.println("----------------------");//prueba
+                System.out.println("----------------------");//prueba 
                 
-                
-
- 
-                //Cartas.desbCarta(0);
+                //Se habilita boton avanzar
+            	ptosAvan = Integer.parseInt (puntos.get(2));
+            	if (ptosAvan==40) {
+            		alertaGeneral.showAlert("Nivel Alcanzado", "Puedes avanzar de nivel");
+            		   btnAvanzar.setDisable(false);
+            	}
                 
 	            int prue = Cartas.carta[posic].getVal();
 	            int prue2 = Cartas.carta[posic].getTemp();
@@ -897,7 +939,6 @@ public class VistaNivel1Controller {
 		        // Se incrementa puntos de nivel +10	    
 		        ptosNivel -= 10;
 		        System.out.println("valor carta inferior y superior coinciden puntos se suma 10 " + ptosNivel);//prueba
-		        //acumtotal = ptosNivel; // Se actualiza acumulado
 		        
 		        // Se guardan en una variable a String
 		        String ptosN1 = Integer.toString(ptosNivel);
@@ -914,9 +955,8 @@ public class VistaNivel1Controller {
 	            puntosNivel1.setText(ptoNiv1Str);
 	            totAcumulado.setText(ptoNiv1Str); // @@@ ojo en este nivel acumulado es el mismo valor de puntosNivel1
 
-
 	            Cartas.carta[posic].setTemp(0);
-	    		Cartas.carta[5].setTemp(0); //----- cambiar carta
+	    		Cartas.carta[5].setTemp(0);
 
 	            // Obtener el nombre de la variable de la carta correspondiente
 	                Field field = getClass().getDeclaredField(cartaVariableName);
@@ -927,7 +967,7 @@ public class VistaNivel1Controller {
 	                pause.setOnFinished(e -> {
 	                	
 	                	cartaNode.setVisible(true); 
-	                	ptoFil2Carta2.setVisible(true); //-------cambiar carta
+	                	ptoFil2Carta2.setVisible(true);
 	                	
 	                //se deshabilitan cartas sin coincidir de la fila inferior
 	                for (int x = 4; x < Cartas.carta.length; x++) {
@@ -1023,15 +1063,33 @@ public class VistaNivel1Controller {
 	        int numeroBuscado = 1;
 	        int posic = Cartas.buscarCartaSuperior(numeroBuscado);
 	        int valCartaSup = Cartas.carta[posic].getVal();
+	        
+	        /*
+	         * Valor de la carta superior se toma segun el radioButton seleccionado
+	         * Se invoca el metodo obtenerValorRadCar de la clase Cartas para obtener el valor 
+	         * segun la carta superior seleccionada
+	         */   		      
+	        int resul = 0;
+    		if (posic==0) {
+    			resul= Cartas.obtenerValorRadCar(btnsF1C1);
+    		}else if (posic==1) {
+        		resul= Cartas.obtenerValorRadCar(btnsF1C2);
+    		}else if (posic==2) {
+        		resul= Cartas.obtenerValorRadCar(btnsF1C3);
+     		}else if (posic==3) {
+        		resul= Cartas.obtenerValorRadCar(btnsF1C4);
+      		}
 
+    		
+    		//Se obtiene la carta que se selecciono en la fila supeior y el vBox
 	        String cartaVariableName = "ptoFil1Carta" + (posic + 1);
-	        System.out.println("valor carta superior " + cartaVariableName +" es "+ valCartaSup + ", valor carta inferior : " + nunCarta1);//prueba
-
+	        String cartaVboxColor = "vBox" + (posic + 1);
+	        System.out.println("valor carta superior " + cartaVariableName +" es "+ valCartaSup + ", valor carta inferior : " + nunCarta1);//prueba	      
 	        
 	        
             try {
 	        // Comparar el valor con el de la carta seleccionada en la fila superior
-	        if (nunCarta1 == valCartaSup) {
+	        if (nunCarta1 == valCartaSup  && valCartaSup == resul) {
 	        	
 		        System.out.println("valor carta inferior y superior coinciden");//prueba
 		        
@@ -1039,13 +1097,11 @@ public class VistaNivel1Controller {
 		        int acumtotal = Integer.parseInt (puntos.get(0)); // Obtener el valor de "Acumulado" de la lista
 		        int ptosNivel = Integer.parseInt (puntos.get(1)); // Obtener el valor de "puntosnivel1" de la lista
 		        int ptosAvan = Integer.parseInt (puntos.get(2)); // Obtener el valor de "puntosnivel1" de la lista
-		        //String ptoNiv1Str = (puntos.get(1));
 		        		        
 		        // Se incrementa puntos de nivel +10	    
 		        ptosNivel += 10;
 		        ptosAvan +=10;
 		        System.out.println("valor carta inferior y superior coinciden puntos se suma 10 " + ptosNivel);//prueba
-		        //acumtotal = ptosNivel; // Se actualiza acumulado
 		        
 		        // Se guardan en una variable a String
 		        String ptosN1 = Integer.toString(ptosNivel);
@@ -1067,8 +1123,8 @@ public class VistaNivel1Controller {
 		    	 // Carta superior se tomo temporal como 2
 	        	Cartas.carta[posic].setTemp(2);
 		    	//Carta inferior se tomo temporal como 2
-	    		Cartas.carta[6].setTemp(2); //@@@ojo cambiar valor en otras filas de carta[valor carta inferior]
-		    	//Sebloquea carta que coincide inferior
+	    		Cartas.carta[6].setTemp(2); 
+		    	//Se bloquea carta que coincide inferior
 		        ptoFil2Carta3.setVisible(false);
 		        ptoFil2Carta3.setDisable(true);
 	            
@@ -1078,9 +1134,24 @@ public class VistaNivel1Controller {
                 Field field = getClass().getDeclaredField(cartaVariableName);
                 field.setAccessible(true);
                 Node cartaNode = (Node) field.get(this);
-                cartaNode.setVisible(true);
+                cartaNode.setVisible(false);
                 cartaNode.setDisable(true);
                 cartaNode.setOpacity(0.05);
+                
+                /*
+                 * Cambio del color de la carta vBox
+                 */
+                //Se crea el color
+                Color colorPersonalizado = Color.rgb(241, 0, 226);
+                // se asigna el color carta inferior
+				vBox7.setBackground(new Background(new BackgroundFill(colorPersonalizado, null, null)));
+
+                // se asigna el color carta superior
+                Field fieldBox = getClass().getDeclaredField(cartaVboxColor);
+                fieldBox.setAccessible(true);
+                Node vBoxNode = (Node) fieldBox.get(this);
+                ((Region) vBoxNode).setBackground(new Background(new BackgroundFill(colorPersonalizado, null, null)));
+ 
                 
                 //se habilitan cartas sin coincidir de la fila superior
                 for (int i = 0; i < Cartas.carta.length -4; i++) {
@@ -1128,11 +1199,13 @@ public class VistaNivel1Controller {
                 }//fin for
                 System.out.println("----------------------");//prueba
                 
-                
-
- 
-                //Cartas.desbCarta(0);
-                
+                //Se habilita boton avanzar
+            	ptosAvan = Integer.parseInt (puntos.get(2));
+            	if (ptosAvan==40) {
+            		alertaGeneral.showAlert("Nivel Alcanzado", "Puedes avanzar de nivel");
+            		   btnAvanzar.setDisable(false);
+            	}
+                                
 	            int prue = Cartas.carta[posic].getVal();
 	            int prue2 = Cartas.carta[posic].getTemp();
 	            System.out.println("valor carta verdadero : " + prue);
@@ -1146,12 +1219,10 @@ public class VistaNivel1Controller {
 		     // Se decrementa puntos de nivel -10	    	    
 		        int acumtotal = Integer.parseInt (puntos.get(0)); // Obtener el valor de "Acumulado" de la lista
 		        int ptosNivel = Integer.parseInt (puntos.get(1)); // Obtener el valor de "puntosnivel1" de la lista
-		        //String ptoNiv1Str = (puntos.get(1));
 		        		        
 		        // Se incrementa puntos de nivel +10	    
 		        ptosNivel -= 10;
 		        System.out.println("valor carta inferior y superior coinciden puntos se suma 10 " + ptosNivel);//prueba
-		        //acumtotal = ptosNivel; // Se actualiza acumulado
 		        
 		        // Se guardan en una variable a String
 		        String ptosN1 = Integer.toString(ptosNivel);
@@ -1167,7 +1238,6 @@ public class VistaNivel1Controller {
 		        String ptoNiv1Str = (puntos.get(1));
 	            puntosNivel1.setText(ptoNiv1Str);
 	            totAcumulado.setText(ptoNiv1Str); // @@@ ojo en este nivel acumulado es el mismo valor de puntosNivel1
-
 
 	            Cartas.carta[posic].setTemp(0);
 	    		Cartas.carta[6].setTemp(0);
@@ -1277,15 +1347,32 @@ public class VistaNivel1Controller {
 	        int numeroBuscado = 1;
 	        int posic = Cartas.buscarCartaSuperior(numeroBuscado);
 	        int valCartaSup = Cartas.carta[posic].getVal();
+	        
+	        /*
+	         * Valor de la carta superior se toma segun el radioButton seleccionado
+	         * Se invoca el metodo obtenerValorRadCar de la clase Cartas para obtener el valor 
+	         * segun la carta superior seleccionada
+	         */   		      
+	        int resul = 0;
+    		if (posic==0) {
+    			resul= Cartas.obtenerValorRadCar(btnsF1C1);
+    		}else if (posic==1) {
+        		resul= Cartas.obtenerValorRadCar(btnsF1C2);
+    		}else if (posic==2) {
+        		resul= Cartas.obtenerValorRadCar(btnsF1C3);
+     		}else if (posic==3) {
+        		resul= Cartas.obtenerValorRadCar(btnsF1C4);
+      		}
 
+    		//Se obtiene la carta que se selecciono en la fila supeior y el vBox
 	        String cartaVariableName = "ptoFil1Carta" + (posic + 1);
-	        System.out.println("valor carta superior " + cartaVariableName +" es "+ valCartaSup + ", valor carta inferior : " + nunCarta1);//prueba
-
+	        String cartaVboxColor = "vBox" + (posic + 1);
+	        System.out.println("valor carta superior " + cartaVariableName +" es "+ valCartaSup + ", valor carta inferior : " + nunCarta1);//prueba	      
 	        
 	        
             try {
 	        // Comparar el valor con el de la carta seleccionada en la fila superior
-	        if (nunCarta1 == valCartaSup) {
+	        if (nunCarta1 == valCartaSup  && valCartaSup == resul) {
 	        	
 		        System.out.println("valor carta inferior y superior coinciden");//prueba
 		        
@@ -1293,13 +1380,11 @@ public class VistaNivel1Controller {
 		        int acumtotal = Integer.parseInt (puntos.get(0)); // Obtener el valor de "Acumulado" de la lista
 		        int ptosNivel = Integer.parseInt (puntos.get(1)); // Obtener el valor de "puntosnivel1" de la lista
 		        int ptosAvan = Integer.parseInt (puntos.get(2)); // Obtener el valor de "puntosnivel1" de la lista
-		        //String ptoNiv1Str = (puntos.get(1));
 		        		        
 		        // Se incrementa puntos de nivel +10	    
 		        ptosNivel += 10;
 		        ptosAvan +=10;
 		        System.out.println("valor carta inferior y superior coinciden puntos se suma 10 " + ptosNivel);//prueba
-		        //acumtotal = ptosNivel; // Se actualiza acumulado
 		        
 		        // Se guardan en una variable a String
 		        String ptosN1 = Integer.toString(ptosNivel);
@@ -1321,7 +1406,7 @@ public class VistaNivel1Controller {
 		    	 // Carta superior se tomo temporal como 2
 	        	Cartas.carta[posic].setTemp(2);
 		    	//Carta inferior se tomo temporal como 2
-	    		Cartas.carta[7].setTemp(2); //@@@ojo cambiar valor en otras filas de carta[valor carta inferior]
+	    		Cartas.carta[7].setTemp(2); 
 		    	//Sebloquea carta que coincide inferior
 		        ptoFil2Carta4.setVisible(false);
 		        ptoFil2Carta4.setDisable(true);
@@ -1332,9 +1417,24 @@ public class VistaNivel1Controller {
                 Field field = getClass().getDeclaredField(cartaVariableName);
                 field.setAccessible(true);
                 Node cartaNode = (Node) field.get(this);
-                cartaNode.setVisible(true);
+                cartaNode.setVisible(false);
                 cartaNode.setDisable(true);
                 cartaNode.setOpacity(0.05);
+                
+                /*
+                 * Cambio del color de la carta vBox
+                 */
+                //Se crea el color
+                Color colorPersonalizado = Color.rgb(0, 126, 241);
+                // se asigna el color carta inferior
+				vBox8.setBackground(new Background(new BackgroundFill(colorPersonalizado, null, null)));
+
+                //Se asigna el color carta superior
+                Field fieldBox = getClass().getDeclaredField(cartaVboxColor);
+                fieldBox.setAccessible(true);
+                Node vBoxNode = (Node) fieldBox.get(this);
+                ((Region) vBoxNode).setBackground(new Background(new BackgroundFill(colorPersonalizado, null, null)));
+
                 
                 //se habilitan cartas sin coincidir de la fila superior
                 for (int i = 0; i < Cartas.carta.length -4; i++) {
@@ -1382,11 +1482,13 @@ public class VistaNivel1Controller {
                 }//fin for
                 System.out.println("----------------------");//prueba
                 
-                
-
- 
-                //Cartas.desbCarta(0);
-                
+                //Se habilita boton avanzar
+            	ptosAvan = Integer.parseInt (puntos.get(2));
+            	if (ptosAvan==40) {
+            		alertaGeneral.showAlert("Nivel Alcanzado", "Puedes avanzar de nivel");
+            		   btnAvanzar.setDisable(false);
+            	}
+                                
 	            int prue = Cartas.carta[posic].getVal();
 	            int prue2 = Cartas.carta[posic].getTemp();
 	            System.out.println("valor carta verdadero : " + prue);
@@ -1400,12 +1502,11 @@ public class VistaNivel1Controller {
 		     // Se decrementa puntos de nivel -10	    	    
 		        int acumtotal = Integer.parseInt (puntos.get(0)); // Obtener el valor de "Acumulado" de la lista
 		        int ptosNivel = Integer.parseInt (puntos.get(1)); // Obtener el valor de "puntosnivel1" de la lista
-		        //String ptoNiv1Str = (puntos.get(1));
+
 		        		        
 		        // Se incrementa puntos de nivel +10	    
 		        ptosNivel -= 10;
 		        System.out.println("valor carta inferior y superior coinciden puntos se suma 10 " + ptosNivel);//prueba
-		        //acumtotal = ptosNivel; // Se actualiza acumulado
 		        
 		        // Se guardan en una variable a String
 		        String ptosN1 = Integer.toString(ptosNivel);
@@ -1421,7 +1522,6 @@ public class VistaNivel1Controller {
 		        String ptoNiv1Str = (puntos.get(1));
 	            puntosNivel1.setText(ptoNiv1Str);
 	            totAcumulado.setText(ptoNiv1Str); // @@@ ojo en este nivel acumulado es el mismo valor de puntosNivel1
-
 		        
 	            Cartas.carta[posic].setTemp(0);
 	    		Cartas.carta[7].setTemp(0);
@@ -1494,7 +1594,7 @@ public class VistaNivel1Controller {
 	    }
 	
 	    @FXML
-	    void btnAvanzar2(ActionEvent event) throws IOException {
+	    void btnAvanzar(ActionEvent event) throws IOException {
 	    	int ptosAvan = Integer.parseInt (puntos.get(2));
 	    	System.out.println("puntos alcanzado para avanzar " + ptosAvan );
 	    	if (ptosAvan ==40) {
@@ -1525,6 +1625,9 @@ public class VistaNivel1Controller {
 		this.obtUsuario.setText(text);
 		this.labEdadn1.setText(text2);
 		
+		//Se deshabilita boton avanzar
+    	btnAvanzar.setDisable(true);
+		
         //Se accede a los valores de la lista "puntos"		
 		String ptoNiv1Str = (puntos.get(1));
         puntosNivel1.setText(ptoNiv1Str);
@@ -1543,15 +1646,15 @@ public class VistaNivel1Controller {
         int num4 = resultado[var2];
         int num5 = resultado[var3];
 		
-        labOpeC1.setText(num1 +" + " + num2 + " es:");
-        car1btn1.setText(String.valueOf(num3));
-        car1btn2.setText(String.valueOf(num4));
-        car1btn3.setText(String.valueOf(num5));
-
+        //Encabezado carta 1 de la operacion
+        labOpeC1.setText(num1 +" + " + num2 + " es:");    
+        //Se invoca el metodo asignarValorRadCar de Cartas para asignar los valores de los radiobutton
+        Cartas.asignarValorRadCar(btnsF1C1, "rad1Car", num3);
+        Cartas.asignarValorRadCar(btnsF1C1, "rad2Car", num4);
+        Cartas.asignarValorRadCar(btnsF1C1, "rad3Car", num5);
         
         
-        //valores operacion carta 2 fila 1
-        
+        //valores operacion carta 2 fila 1       
         int var11 = aleatorio1[0];
         int var12 = aleatorio1[1];
         int var13 = aleatorio1[2];
@@ -1561,11 +1664,13 @@ public class VistaNivel1Controller {
         int num13 = resultado1[var11];
         int num14 = resultado1[var12];
         int num15 = resultado1[var13];
-		
-        labOpeC2.setText(num11 +" + " + num12 + " es:");
-        car2btn1.setText(String.valueOf(num13));
-        car2btn2.setText(String.valueOf(num14));
-        car2btn3.setText(String.valueOf(num15));
+        
+        //Encabezado carta 2 de la operacion		
+        labOpeC2.setText(num11 +" + " + num12 + " es:");   
+        //Se invoca el metodo asignarValorRadCar de Cartas para asignar los valores de los radiobutton
+        Cartas.asignarValorRadCar(btnsF1C2, "rad1Car", num13);
+        Cartas.asignarValorRadCar(btnsF1C2, "rad2Car", num14);
+        Cartas.asignarValorRadCar(btnsF1C2, "rad3Car", num15);
 
 
         //valores operacion carta 3 fila 1
@@ -1580,10 +1685,12 @@ public class VistaNivel1Controller {
         int num24 = resultado2[var22];
         int num25 = resultado2[var23];
 		
+        //Encabezado carta 3 de la operacion
         labOpeC3.setText(num21 +" + " + num22 + " es:");
-        car3btn1.setText(String.valueOf(num23));
-        car3btn2.setText(String.valueOf(num24));
-        car3btn3.setText(String.valueOf(num25));
+        //Se invoca el metodo asignarValorRadCar de Cartas para asignar los valores de los radiobutton
+        Cartas.asignarValorRadCar(btnsF1C3, "rad1Car", num23);
+        Cartas.asignarValorRadCar(btnsF1C3, "rad2Car", num24);
+        Cartas.asignarValorRadCar(btnsF1C3, "rad3Car", num25);
 
         
         
@@ -1599,10 +1706,12 @@ public class VistaNivel1Controller {
         int num34 = resultado3[var32];
         int num35 = resultado3[var33];
 		
+        //Encabezado carta 4 de la operacion
         labOpeC4.setText(num31 +" + " + num32 + " es:");
-        car4btn1.setText(String.valueOf(num33));
-        car4btn2.setText(String.valueOf(num34));
-        car4btn3.setText(String.valueOf(num35));
+        //Se invoca el metodo asignarValorRadCar de Cartas para asignar los valores de los radiobutton
+        Cartas.asignarValorRadCar(btnsF1C4, "rad1Car", num33);
+        Cartas.asignarValorRadCar(btnsF1C4, "rad2Car", num34);
+        Cartas.asignarValorRadCar(btnsF1C4, "rad3Car", num35);
         
         
         //Configuracion valores cartas fila 2 (1-4) de respuestas
@@ -1619,11 +1728,9 @@ public class VistaNivel1Controller {
         resCar2.setText(String.valueOf(nunCarta2));
         resCar3.setText(String.valueOf(nunCarta3));
         resCar4.setText(String.valueOf(nunCarta4));
+        
 		
 	}
 	
-
-
-
 
 }
