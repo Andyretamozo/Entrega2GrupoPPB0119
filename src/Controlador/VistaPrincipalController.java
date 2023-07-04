@@ -38,8 +38,9 @@ public class VistaPrincipalController {
 		stage.setTitle("Matemax: calcula y combina");
     	stage.setScene(scene);
 		controller.setStage(stage);
+		this.stage.close();
     	stage.show();
-    	this.stage.close();
+    	
     }
 
 	public void setStage(Stage primaryStage) {

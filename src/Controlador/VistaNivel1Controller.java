@@ -10,7 +10,10 @@ import application.alertaGeneral;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -184,15 +187,12 @@ public class VistaNivel1Controller {
 	             
 	    @FXML
 	    void Fil1Carta1(MouseEvent event) {
-	    		    		    	
-	    	//Se invoca metodo Crear cartas con la instancia creada de la clase Cartas
-    		actCarta.crearCartas(); 
-    		    		
+	    		    		    	   		    		
 	        int resul = resultado [4];
             System.out.println("valor real de la carta superior es: " + resul);
 	        
             //Se almacenan datos de las cartas en el array	        
-    		Cartas.carta[0].setVal(resul); // valor es resul @@6@ ojo cambiar
+    		Cartas.carta[0].setVal(resul);
     		Cartas.carta[0].setTemp(1);
             
     		//Se asignan valores iniciales de la carta actual
@@ -203,7 +203,7 @@ public class VistaNivel1Controller {
     		ptoFil1Carta1.setDisable(cb1);
   		
     		//Se bloquean cartas diferentes a actual
-            for (int i = 0; i < Cartas.carta.length-4; i++) {
+    		for (int i = 0; i < Cartas.carta.length-4; i++) {
                 if (Cartas.carta[i].getTemp() == 0) {
 
                     String cartaVariableName = "ptoFil1Carta" + (i + 1);
@@ -222,6 +222,7 @@ public class VistaNivel1Controller {
                     }
                 }
             }//fin for
+         
             System.out.println("----------------------");//prueba
             
     		//Se desbloquean cartas diferentes inferiores sin coincidir
@@ -253,13 +254,11 @@ public class VistaNivel1Controller {
 	    @FXML
 	    void Fil1Carta2(MouseEvent event) {
     		
-	    	//Se invoca metodo Crear cartas con la instancia creada de la clase Cartas
-    		actCarta.crearCartas(); 
     		//Valor de la carta
 	        int resul1 = resultado1 [4];
             System.out.println("valor carta superior es: " + resul1);
-	        //Se almacenan datos de las cartas en el array
-	        
+            
+	        //Se almacenan datos de las cartas en el array	        
     		Cartas.carta[1].setVal(resul1);
     		Cartas.carta[1].setTemp(1);
             
@@ -318,13 +317,11 @@ public class VistaNivel1Controller {
 	    @FXML
 	    void Fil1Carta3(MouseEvent event) {
 	    	
-    		//Se invoca metodo Crear cartas con la instancia creada de la clase Cartas
-    		actCarta.crearCartas(); 
     		//Valor de la carta
 	        int resul2 = resultado2 [4];
             System.out.println("valor carta superior es: " + resul2);
-	        //Se almacenan datos de las cartas en el array
-	        
+            
+	        //Se almacenan datos de las cartas en el array	        
     		Cartas.carta[2].setVal(resul2);
     		Cartas.carta[2].setTemp(1);
             
@@ -384,13 +381,11 @@ public class VistaNivel1Controller {
 	
 	    @FXML
 	    void Fil1Carta4(MouseEvent event) {
-    		
-    		//Se invoca metodo Crear cartas con la instancia creada de la clase Cartas
-    		actCarta.crearCartas(); 
-    		
+    		    		
     		//Valor de la carta
 	        int resul3 = resultado3 [4];
             System.out.println("valor carta superior es: " + resul3);
+            
 	        //Se almacenan datos de las cartas en el array
     		Cartas.carta[3].setVal(resul3);
     		Cartas.carta[3].setTemp(1);
@@ -462,10 +457,10 @@ public class VistaNivel1Controller {
 	        ptoFil2Carta1.setVisible(false);
 	       	      
             //se deshabilitan cartas sin coincidir fila inferior
-            for (int i = 0; i < Cartas.carta.length -4; i++) {
+            for (int i = 4; i < Cartas.carta.length; i++) {
                 if (Cartas.carta[i].getTemp() == 0) {
                     
-    	            String cartaVariableName2 = "ptoFil2Carta" + (i + 1);
+    	            String cartaVariableName2 = "ptoFil2Carta" + (i - 3);
     	            int prue = Cartas.carta[i].getTemp();//prueba
     	            System.out.println("valor temp a bloquear: " + cartaVariableName2 +" es "+ + prue); //prueba
 
@@ -481,11 +476,11 @@ public class VistaNivel1Controller {
                 }
             }//fin for
             System.out.println("----------------------");//prueba
+                 
 	     
             /*
              * Se inicia verificacion de coincidencia
              */ 
-    		//int resul= Cartas.obtenerValorRadCar(btnsF1C1);
             
 	        int numeroBuscado = 1;
 	        int posic = Cartas.buscarCartaSuperior(numeroBuscado);
@@ -499,12 +494,32 @@ public class VistaNivel1Controller {
 	        int resul = 0;
     		if (posic==0) {
     			resul= Cartas.obtenerValorRadCar(btnsF1C1);
+    			
+                //Se bloquean radioButton carta superior selecionada
+                Cartas.bloqRadCar(btnsF1C1, "rad1Car");
+                Cartas.bloqRadCar(btnsF1C1, "rad2Car");
+                Cartas.bloqRadCar(btnsF1C1, "rad3Car"); 
+                
     		}else if (posic==1) {
         		resul= Cartas.obtenerValorRadCar(btnsF1C2);
+        		
+                //Se bloquean radioButton carta superior selecionada
+                Cartas.bloqRadCar(btnsF1C2, "rad1Car");
+                Cartas.bloqRadCar(btnsF1C2, "rad2Car");
+                Cartas.bloqRadCar(btnsF1C2, "rad3Car");
+                
     		}else if (posic==2) {
         		resul= Cartas.obtenerValorRadCar(btnsF1C3);
+                //Se bloquean radioButton carta superior selecionada
+                Cartas.bloqRadCar(btnsF1C3, "rad1Car");
+                Cartas.bloqRadCar(btnsF1C3, "rad2Car");
+                Cartas.bloqRadCar(btnsF1C3, "rad3Car");  
      		}else if (posic==3) {
         		resul= Cartas.obtenerValorRadCar(btnsF1C4);
+                //Se bloquean radioButton carta superior selecionada
+                Cartas.bloqRadCar(btnsF1C4, "rad1Car");
+                Cartas.bloqRadCar(btnsF1C4, "rad2Car");
+                Cartas.bloqRadCar(btnsF1C4, "rad3Car");  
       		}
 	        
 
@@ -563,8 +578,9 @@ public class VistaNivel1Controller {
                 Field field = getClass().getDeclaredField(cartaVariableName);
                 field.setAccessible(true);
                 Node cartaNode = (Node) field.get(this);
-                cartaNode.setVisible(false);
+                cartaNode.setVisible(true);
                 cartaNode.setDisable(true);
+                cartaNode.setOpacity(0.09);
                 
                 /*
                  * Cambio del color de la carta vBox
@@ -728,6 +744,36 @@ public class VistaNivel1Controller {
 	                }//fin for
 	                System.out.println("----------------------");//prueba
 	                
+	                
+	                /*	    	      
+	    	         * Se invoca el metodo bloqRadCar de la clase Cartas para obtener el valor 
+	    	         * segun la carta superior seleccionada
+	    	         */   		      
+	    	       
+	        		if (posic==0) {	        				        			
+	                    //Se bloquean radioButton carta superior selecionada
+	                    Cartas.desbloqRadCar(btnsF1C1, "rad1Car");
+	                    Cartas.desbloqRadCar(btnsF1C1, "rad2Car");
+	                    Cartas.desbloqRadCar(btnsF1C1, "rad3Car"); 
+	                    
+	        		}else if (posic==1) {	            		
+	                    //Se bloquean radioButton carta superior selecionada
+	                    Cartas.desbloqRadCar(btnsF1C2, "rad1Car");
+	                    Cartas.desbloqRadCar(btnsF1C2, "rad2Car");
+	                    Cartas.desbloqRadCar(btnsF1C2, "rad3Car");
+	                    
+	        		}else if (posic==2) {
+	                    //Se bloquean radioButton carta superior selecionada
+	                    Cartas.desbloqRadCar(btnsF1C3, "rad1Car");
+	                    Cartas.desbloqRadCar(btnsF1C3, "rad2Car");
+	                    Cartas.desbloqRadCar(btnsF1C3, "rad3Car");  
+	         		}else if (posic==3) {
+	                    //Se bloquean radioButton carta superior selecionada
+	                    Cartas.desbloqRadCar(btnsF1C4, "rad1Car");
+	                    Cartas.desbloqRadCar(btnsF1C4, "rad2Car");
+	                    Cartas.desbloqRadCar(btnsF1C4, "rad3Car");  
+	          		}
+	                
 	                }); // Hacer visible el nodo después de la pausa
 	                pause.play();
 	                
@@ -753,10 +799,10 @@ public class VistaNivel1Controller {
 	        ptoFil2Carta2.setVisible(false);
 	       	      
             //se deshabilitan cartas sin coincidir fila inferior
-            for (int i = 0; i < Cartas.carta.length -4; i++) {
+            for (int i = 4; i < Cartas.carta.length; i++) {
                 if (Cartas.carta[i].getTemp() == 0) {
                     
-    	            String cartaVariableName2 = "ptoFil2Carta" + (i + 1);
+    	            String cartaVariableName2 = "ptoFil2Carta" + (i - 3);
     	            int prue = Cartas.carta[i].getTemp();//prueba
     	            System.out.println("valor temp a bloquear: " + cartaVariableName2 +" es "+ + prue); //prueba
 
@@ -786,14 +832,34 @@ public class VistaNivel1Controller {
 	         * segun la carta superior seleccionada
 	         */   		      
 	        int resul = 0;
-    		if (posic==0) {
+	        if (posic==0) {
     			resul= Cartas.obtenerValorRadCar(btnsF1C1);
+    			
+                //Se bloquean radioButton carta superior selecionada
+                Cartas.bloqRadCar(btnsF1C1, "rad1Car");
+                Cartas.bloqRadCar(btnsF1C1, "rad2Car");
+                Cartas.bloqRadCar(btnsF1C1, "rad3Car"); 
+                
     		}else if (posic==1) {
         		resul= Cartas.obtenerValorRadCar(btnsF1C2);
+        		
+                //Se bloquean radioButton carta superior selecionada
+                Cartas.bloqRadCar(btnsF1C2, "rad1Car");
+                Cartas.bloqRadCar(btnsF1C2, "rad2Car");
+                Cartas.bloqRadCar(btnsF1C2, "rad3Car");
+                
     		}else if (posic==2) {
         		resul= Cartas.obtenerValorRadCar(btnsF1C3);
+                //Se bloquean radioButton carta superior selecionada
+                Cartas.bloqRadCar(btnsF1C3, "rad1Car");
+                Cartas.bloqRadCar(btnsF1C3, "rad2Car");
+                Cartas.bloqRadCar(btnsF1C3, "rad3Car");  
      		}else if (posic==3) {
         		resul= Cartas.obtenerValorRadCar(btnsF1C4);
+                //Se bloquean radioButton carta superior selecionada
+                Cartas.bloqRadCar(btnsF1C4, "rad1Car");
+                Cartas.bloqRadCar(btnsF1C4, "rad2Car");
+                Cartas.bloqRadCar(btnsF1C4, "rad3Car");  
       		}
 
     		//Se obtiene la carta que se selecciono en la fila supeior y el vBox
@@ -849,9 +915,9 @@ public class VistaNivel1Controller {
                 Field field = getClass().getDeclaredField(cartaVariableName);
                 field.setAccessible(true);
                 Node cartaNode = (Node) field.get(this);
-                cartaNode.setVisible(false);
+                cartaNode.setVisible(true);
                 cartaNode.setDisable(true);
-                cartaNode.setOpacity(0.05);
+                cartaNode.setOpacity(0.09);
                 
                 /*
                  * Cambio del color de la carta vBox
@@ -1014,6 +1080,35 @@ public class VistaNivel1Controller {
 	                }//fin for
 	                System.out.println("----------------------");//prueba
 	                
+	                /*	    	      
+	    	         * Se invoca el metodo bloqRadCar de la clase Cartas para obtener el valor 
+	    	         * segun la carta superior seleccionada
+	    	         */   		      
+	    	       
+	        		if (posic==0) {	        				        			
+	                    //Se bloquean radioButton carta superior selecionada
+	                    Cartas.desbloqRadCar(btnsF1C1, "rad1Car");
+	                    Cartas.desbloqRadCar(btnsF1C1, "rad2Car");
+	                    Cartas.desbloqRadCar(btnsF1C1, "rad3Car"); 
+	                    
+	        		}else if (posic==1) {	            		
+	                    //Se bloquean radioButton carta superior selecionada
+	                    Cartas.desbloqRadCar(btnsF1C2, "rad1Car");
+	                    Cartas.desbloqRadCar(btnsF1C2, "rad2Car");
+	                    Cartas.desbloqRadCar(btnsF1C2, "rad3Car");
+	                    
+	        		}else if (posic==2) {
+	                    //Se bloquean radioButton carta superior selecionada
+	                    Cartas.desbloqRadCar(btnsF1C3, "rad1Car");
+	                    Cartas.desbloqRadCar(btnsF1C3, "rad2Car");
+	                    Cartas.desbloqRadCar(btnsF1C3, "rad3Car");  
+	         		}else if (posic==3) {
+	                    //Se bloquean radioButton carta superior selecionada
+	                    Cartas.desbloqRadCar(btnsF1C4, "rad1Car");
+	                    Cartas.desbloqRadCar(btnsF1C4, "rad2Car");
+	                    Cartas.desbloqRadCar(btnsF1C4, "rad3Car");  
+	          		}
+	                
 	                }); // Hacer visible el nodo después de la pausa
 	                pause.play();
 	                
@@ -1037,10 +1132,10 @@ public class VistaNivel1Controller {
 	        ptoFil2Carta3.setVisible(false);
 	       	      
             //se deshabilitan cartas sin coincidir fila inferior
-            for (int i = 0; i < Cartas.carta.length -4; i++) {
+            for (int i = 4; i < Cartas.carta.length; i++) {
                 if (Cartas.carta[i].getTemp() == 0) {
                     
-    	            String cartaVariableName2 = "ptoFil2Carta" + (i + 1);
+    	            String cartaVariableName2 = "ptoFil2Carta" + (i - 3);
     	            int prue = Cartas.carta[i].getTemp();//prueba
     	            System.out.println("valor temp a bloquear: " + cartaVariableName2 +" es "+ + prue); //prueba
 
@@ -1070,16 +1165,35 @@ public class VistaNivel1Controller {
 	         * segun la carta superior seleccionada
 	         */   		      
 	        int resul = 0;
-    		if (posic==0) {
+	        if (posic==0) {
     			resul= Cartas.obtenerValorRadCar(btnsF1C1);
+    			
+                //Se bloquean radioButton carta superior selecionada
+                Cartas.bloqRadCar(btnsF1C1, "rad1Car");
+                Cartas.bloqRadCar(btnsF1C1, "rad2Car");
+                Cartas.bloqRadCar(btnsF1C1, "rad3Car"); 
+                
     		}else if (posic==1) {
         		resul= Cartas.obtenerValorRadCar(btnsF1C2);
+        		
+                //Se bloquean radioButton carta superior selecionada
+                Cartas.bloqRadCar(btnsF1C2, "rad1Car");
+                Cartas.bloqRadCar(btnsF1C2, "rad2Car");
+                Cartas.bloqRadCar(btnsF1C2, "rad3Car");
+                
     		}else if (posic==2) {
         		resul= Cartas.obtenerValorRadCar(btnsF1C3);
+                //Se bloquean radioButton carta superior selecionada
+                Cartas.bloqRadCar(btnsF1C3, "rad1Car");
+                Cartas.bloqRadCar(btnsF1C3, "rad2Car");
+                Cartas.bloqRadCar(btnsF1C3, "rad3Car");  
      		}else if (posic==3) {
         		resul= Cartas.obtenerValorRadCar(btnsF1C4);
+                //Se bloquean radioButton carta superior selecionada
+                Cartas.bloqRadCar(btnsF1C4, "rad1Car");
+                Cartas.bloqRadCar(btnsF1C4, "rad2Car");
+                Cartas.bloqRadCar(btnsF1C4, "rad3Car");  
       		}
-
     		
     		//Se obtiene la carta que se selecciono en la fila supeior y el vBox
 	        String cartaVariableName = "ptoFil1Carta" + (posic + 1);
@@ -1134,9 +1248,9 @@ public class VistaNivel1Controller {
                 Field field = getClass().getDeclaredField(cartaVariableName);
                 field.setAccessible(true);
                 Node cartaNode = (Node) field.get(this);
-                cartaNode.setVisible(false);
+                cartaNode.setVisible(true);
                 cartaNode.setDisable(true);
-                cartaNode.setOpacity(0.05);
+                cartaNode.setOpacity(0.09);
                 
                 /*
                  * Cambio del color de la carta vBox
@@ -1298,6 +1412,35 @@ public class VistaNivel1Controller {
 	                }//fin for
 	                System.out.println("----------------------");//prueba
 	                
+	                /*	    	      
+	    	         * Se invoca el metodo bloqRadCar de la clase Cartas para obtener el valor 
+	    	         * segun la carta superior seleccionada
+	    	         */   		      
+	    	       
+	        		if (posic==0) {	        				        			
+	                    //Se bloquean radioButton carta superior selecionada
+	                    Cartas.desbloqRadCar(btnsF1C1, "rad1Car");
+	                    Cartas.desbloqRadCar(btnsF1C1, "rad2Car");
+	                    Cartas.desbloqRadCar(btnsF1C1, "rad3Car"); 
+	                    
+	        		}else if (posic==1) {	            		
+	                    //Se bloquean radioButton carta superior selecionada
+	                    Cartas.desbloqRadCar(btnsF1C2, "rad1Car");
+	                    Cartas.desbloqRadCar(btnsF1C2, "rad2Car");
+	                    Cartas.desbloqRadCar(btnsF1C2, "rad3Car");
+	                    
+	        		}else if (posic==2) {
+	                    //Se bloquean radioButton carta superior selecionada
+	                    Cartas.desbloqRadCar(btnsF1C3, "rad1Car");
+	                    Cartas.desbloqRadCar(btnsF1C3, "rad2Car");
+	                    Cartas.desbloqRadCar(btnsF1C3, "rad3Car");  
+	         		}else if (posic==3) {
+	                    //Se bloquean radioButton carta superior selecionada
+	                    Cartas.desbloqRadCar(btnsF1C4, "rad1Car");
+	                    Cartas.desbloqRadCar(btnsF1C4, "rad2Car");
+	                    Cartas.desbloqRadCar(btnsF1C4, "rad3Car");  
+	          		}
+	                
 	                }); // Hacer visible el nodo después de la pausa
 	                pause.play();
 	                
@@ -1321,10 +1464,10 @@ public class VistaNivel1Controller {
 	        ptoFil2Carta4.setVisible(false);
 	       	      
             //se deshabilitan cartas sin coincidir fila inferior
-            for (int i = 0; i < Cartas.carta.length -4; i++) {
+            for (int i = 4; i < Cartas.carta.length; i++) {
                 if (Cartas.carta[i].getTemp() == 0) {
                     
-    	            String cartaVariableName2 = "ptoFil2Carta" + (i + 1);
+    	            String cartaVariableName2 = "ptoFil2Carta" + (i - 3);
     	            int prue = Cartas.carta[i].getTemp();//prueba
     	            System.out.println("valor temp a bloquear: " + cartaVariableName2 +" es "+ + prue); //prueba
 
@@ -1354,14 +1497,34 @@ public class VistaNivel1Controller {
 	         * segun la carta superior seleccionada
 	         */   		      
 	        int resul = 0;
-    		if (posic==0) {
+	        if (posic==0) {
     			resul= Cartas.obtenerValorRadCar(btnsF1C1);
+    			
+                //Se bloquean radioButton carta superior selecionada
+                Cartas.bloqRadCar(btnsF1C1, "rad1Car");
+                Cartas.bloqRadCar(btnsF1C1, "rad2Car");
+                Cartas.bloqRadCar(btnsF1C1, "rad3Car"); 
+                
     		}else if (posic==1) {
         		resul= Cartas.obtenerValorRadCar(btnsF1C2);
+        		
+                //Se bloquean radioButton carta superior selecionada
+                Cartas.bloqRadCar(btnsF1C2, "rad1Car");
+                Cartas.bloqRadCar(btnsF1C2, "rad2Car");
+                Cartas.bloqRadCar(btnsF1C2, "rad3Car");
+                
     		}else if (posic==2) {
         		resul= Cartas.obtenerValorRadCar(btnsF1C3);
+                //Se bloquean radioButton carta superior selecionada
+                Cartas.bloqRadCar(btnsF1C3, "rad1Car");
+                Cartas.bloqRadCar(btnsF1C3, "rad2Car");
+                Cartas.bloqRadCar(btnsF1C3, "rad3Car");  
      		}else if (posic==3) {
         		resul= Cartas.obtenerValorRadCar(btnsF1C4);
+                //Se bloquean radioButton carta superior selecionada
+                Cartas.bloqRadCar(btnsF1C4, "rad1Car");
+                Cartas.bloqRadCar(btnsF1C4, "rad2Car");
+                Cartas.bloqRadCar(btnsF1C4, "rad3Car");  
       		}
 
     		//Se obtiene la carta que se selecciono en la fila supeior y el vBox
@@ -1417,9 +1580,9 @@ public class VistaNivel1Controller {
                 Field field = getClass().getDeclaredField(cartaVariableName);
                 field.setAccessible(true);
                 Node cartaNode = (Node) field.get(this);
-                cartaNode.setVisible(false);
+                cartaNode.setVisible(true);
                 cartaNode.setDisable(true);
-                cartaNode.setOpacity(0.05);
+                cartaNode.setOpacity(0.09);
                 
                 /*
                  * Cambio del color de la carta vBox
@@ -1582,6 +1745,35 @@ public class VistaNivel1Controller {
 	                }//fin for
 	                System.out.println("----------------------");//prueba
 	                
+	                /*	    	      
+	    	         * Se invoca el metodo bloqRadCar de la clase Cartas para obtener el valor 
+	    	         * segun la carta superior seleccionada
+	    	         */   		      
+	    	       
+	        		if (posic==0) {	        				        			
+	                    //Se bloquean radioButton carta superior selecionada
+	                    Cartas.desbloqRadCar(btnsF1C1, "rad1Car");
+	                    Cartas.desbloqRadCar(btnsF1C1, "rad2Car");
+	                    Cartas.desbloqRadCar(btnsF1C1, "rad3Car"); 
+	                    
+	        		}else if (posic==1) {	            		
+	                    //Se bloquean radioButton carta superior selecionada
+	                    Cartas.desbloqRadCar(btnsF1C2, "rad1Car");
+	                    Cartas.desbloqRadCar(btnsF1C2, "rad2Car");
+	                    Cartas.desbloqRadCar(btnsF1C2, "rad3Car");
+	                    
+	        		}else if (posic==2) {
+	                    //Se bloquean radioButton carta superior selecionada
+	                    Cartas.desbloqRadCar(btnsF1C3, "rad1Car");
+	                    Cartas.desbloqRadCar(btnsF1C3, "rad2Car");
+	                    Cartas.desbloqRadCar(btnsF1C3, "rad3Car");  
+	         		}else if (posic==3) {
+	                    //Se bloquean radioButton carta superior selecionada
+	                    Cartas.desbloqRadCar(btnsF1C4, "rad1Car");
+	                    Cartas.desbloqRadCar(btnsF1C4, "rad2Car");
+	                    Cartas.desbloqRadCar(btnsF1C4, "rad3Car");  
+	          		}
+	                
 	                }); // Hacer visible el nodo después de la pausa
 	                pause.play();
 	                
@@ -1599,22 +1791,22 @@ public class VistaNivel1Controller {
 	    	System.out.println("puntos alcanzado para avanzar " + ptosAvan );
 	    	if (ptosAvan ==40) {
 	    	
-		    	System.out.println("Nivel alcanzado, nivel en construccion");
+		    	System.out.println("Nivel alcanzado");
 
 	    	}
 	    	else {
 
 	    		System.out.println("Nivel no alcanzado");
 	    	}
-            /*
-	    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/VistaNivel1C2.fxml"));
+            
+	    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/VistaNivel2.fxml"));
 	    	Parent root = loader.load();
 	    	Scene scene = new Scene(root);
 	    	nivelActual1.setScene(scene);
-	      	VistaNivel1C2Controller controller = loader.getController();
-	    	controller.init(obtUsuario.getText(), labEdadn1.getText(), nivelActual1, this);
+	      	VistaNivel2Controller controller = loader.getController();
+	    	controller.init(obtUsuario.getText(), labEdadn1.getText(), totAcumulado.getText(), nivelActual1, this);
 	    	nivelActual1.show();
-	    	*/
+	    	
 
 	    }
         
@@ -1633,7 +1825,8 @@ public class VistaNivel1Controller {
         puntosNivel1.setText(ptoNiv1Str);
         totAcumulado.setText(ptoNiv1Str);
         
-        
+    	//Se invoca metodo Crear cartas con la instancia creada de la clase Cartas
+		actCarta.crearCartas(); 
 		
 		//valores operacion carta 1 fila 1
         int var1 = aleatorio[0];
@@ -1729,6 +1922,120 @@ public class VistaNivel1Controller {
         resCar3.setText(String.valueOf(nunCarta3));
         resCar4.setText(String.valueOf(nunCarta4));
         
+		
+	}
+
+
+
+	public void init(String text, String text2, Stage resultado4, VistaResultadoController vistaResultadoController) {
+		this.nivelActual1 = resultado4;
+		this.obtUsuario.setText(text);
+		this.labEdadn1.setText(text2);
+		
+		//Se deshabilita boton avanzar
+    	btnAvanzar.setDisable(true);
+		
+        //Se accede a los valores de la lista "puntos"		
+		String ptoNiv1Str = (puntos.get(1));
+        puntosNivel1.setText(ptoNiv1Str);
+        totAcumulado.setText(ptoNiv1Str);
+        
+    	//Se invoca metodo Crear cartas con la instancia creada de la clase Cartas
+		actCarta.crearCartas(); 
+		
+		//valores operacion carta 1 fila 1
+        int var1 = aleatorio[0];
+        int var2 = aleatorio[1];
+        int var3 = aleatorio[2];
+        int num1 = resultado[0];
+        int num2 = resultado[1];
+        //int resul = resultado [4];
+        int num3 = resultado[var1];
+        int num4 = resultado[var2];
+        int num5 = resultado[var3];
+		
+        //Encabezado carta 1 de la operacion
+        labOpeC1.setText(num1 +" + " + num2 + " es:");    
+        //Se invoca el metodo asignarValorRadCar de Cartas para asignar los valores de los radiobutton
+        Cartas.asignarValorRadCar(btnsF1C1, "rad1Car", num3);
+        Cartas.asignarValorRadCar(btnsF1C1, "rad2Car", num4);
+        Cartas.asignarValorRadCar(btnsF1C1, "rad3Car", num5);
+        
+        
+        //valores operacion carta 2 fila 1       
+        int var11 = aleatorio1[0];
+        int var12 = aleatorio1[1];
+        int var13 = aleatorio1[2];
+        int num11 = resultado1[0];
+        int num12 = resultado1[1];
+        //int resul1 = resultado1 [4];
+        int num13 = resultado1[var11];
+        int num14 = resultado1[var12];
+        int num15 = resultado1[var13];
+        
+        //Encabezado carta 2 de la operacion		
+        labOpeC2.setText(num11 +" + " + num12 + " es:");   
+        //Se invoca el metodo asignarValorRadCar de Cartas para asignar los valores de los radiobutton
+        Cartas.asignarValorRadCar(btnsF1C2, "rad1Car", num13);
+        Cartas.asignarValorRadCar(btnsF1C2, "rad2Car", num14);
+        Cartas.asignarValorRadCar(btnsF1C2, "rad3Car", num15);
+
+
+        //valores operacion carta 3 fila 1
+        
+        int var21 = aleatorio2[0];
+        int var22 = aleatorio2[1];
+        int var23 = aleatorio2[2];
+        int num21 = resultado2[0];
+        int num22 = resultado2[1];
+        //int resul2 = resultado2 [4];
+        int num23 = resultado2[var21];
+        int num24 = resultado2[var22];
+        int num25 = resultado2[var23];
+		
+        //Encabezado carta 3 de la operacion
+        labOpeC3.setText(num21 +" + " + num22 + " es:");
+        //Se invoca el metodo asignarValorRadCar de Cartas para asignar los valores de los radiobutton
+        Cartas.asignarValorRadCar(btnsF1C3, "rad1Car", num23);
+        Cartas.asignarValorRadCar(btnsF1C3, "rad2Car", num24);
+        Cartas.asignarValorRadCar(btnsF1C3, "rad3Car", num25);
+
+        
+        
+        //valores operacion carta 4 fila 1
+        
+        int var31 = aleatorio3[0];
+        int var32 = aleatorio3[1];
+        int var33 = aleatorio3[2];
+        int num31 = resultado3[0];
+        int num32 = resultado3[1];
+        //int resul3 = resultado3 [4];
+        int num33 = resultado3[var31];
+        int num34 = resultado3[var32];
+        int num35 = resultado3[var33];
+		
+        //Encabezado carta 4 de la operacion
+        labOpeC4.setText(num31 +" + " + num32 + " es:");
+        //Se invoca el metodo asignarValorRadCar de Cartas para asignar los valores de los radiobutton
+        Cartas.asignarValorRadCar(btnsF1C4, "rad1Car", num33);
+        Cartas.asignarValorRadCar(btnsF1C4, "rad2Car", num34);
+        Cartas.asignarValorRadCar(btnsF1C4, "rad3Car", num35);
+        
+        
+        //Configuracion valores cartas fila 2 (1-4) de respuestas
+        int varR1 = aleaCartas[0];
+        int varR2 = aleaCartas[1];
+        int varR3 = aleaCartas[2];
+        int varR4 = aleaCartas[3];
+        int nunCarta1 = resCartas [varR1];
+        int nunCarta2 = resCartas [varR2];
+        int nunCarta3 = resCartas [varR3];
+        int nunCarta4 = resCartas [varR4];
+        
+        resCar1.setText(String.valueOf(nunCarta1));
+        resCar2.setText(String.valueOf(nunCarta2));
+        resCar3.setText(String.valueOf(nunCarta3));
+        resCar4.setText(String.valueOf(nunCarta4));
 		
 	}
 	

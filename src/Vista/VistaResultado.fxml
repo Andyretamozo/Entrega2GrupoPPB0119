@@ -7,8 +7,12 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: F17300;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.VistaResultadoController">
    <children>
@@ -17,7 +21,7 @@
             <GaussianBlur />
          </effect>
       </Rectangle>
-      <Button fx:id="btnInicio" layoutX="306.0" layoutY="682.0" mnemonicParsing="false" prefHeight="77.0" prefWidth="270.0" style="-fx-background-color: D9D9D9;" text="Inicio" textFill="#064a8f">
+      <Button fx:id="btnInicio" layoutX="306.0" layoutY="682.0" mnemonicParsing="false" onAction="#btnInicio" prefHeight="77.0" prefWidth="270.0" style="-fx-background-color: D9D9D9;" text="Inicio" textFill="#064a8f">
          <font>
             <Font size="36.0" />
          </font>
@@ -35,7 +39,7 @@
             <Image url="@../../Recursos/titulo.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnJuegoNuevo" layoutX="708.0" layoutY="682.0" mnemonicParsing="false" prefHeight="77.0" prefWidth="270.0" style="-fx-background-color: D9D9D9;" text="Volver a jugar" textFill="#064a8f">
+      <Button fx:id="btnJuegoNuevo" layoutX="708.0" layoutY="682.0" mnemonicParsing="false" onAction="#btnJuegoNuevo" prefHeight="77.0" prefWidth="270.0" style="-fx-background-color: D9D9D9;" text="Volver a jugar" textFill="#064a8f">
          <font>
             <Font size="36.0" />
          </font>
@@ -43,7 +47,148 @@
             <DropShadow />
          </effect>
       </Button>
-      <ImageView fitHeight="122.0" fitWidth="210.0" layoutX="24.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+      <GridPane fx:id="gridPunt" gridLinesVisible="true" layoutX="306.0" layoutY="319.0" prefHeight="288.0" prefWidth="671.0" style="-fx-stroke: F17300;">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="210.0" minWidth="10.0" prefWidth="106.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="419.0" minWidth="10.0" prefWidth="316.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="280.0" minWidth="10.0" prefWidth="111.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="280.0" minWidth="10.0" prefWidth="141.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre jugador" textAlignment="CENTER" wrappingWidth="315.13671875" GridPane.columnIndex="1">
+               <font>
+                  <Font name="Monospaced Bold" size="24.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Puesto" textAlignment="CENTER" wrappingWidth="105.13671875">
+               <font>
+                  <Font name="Monospaced Bold" size="24.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Puntos" textAlignment="CENTER" wrappingWidth="139.13671875" GridPane.columnIndex="3">
+               <font>
+                  <Font name="Monospaced Bold" size="24.0" />
+               </font>
+            </Text>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="110.0" text="2" textFill="WHITE" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Monospaced Bold Italic" size="23.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="110.0" text="1" textFill="WHITE" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Monospaced Bold Italic" size="23.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="110.0" text="3" textFill="WHITE" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Monospaced Bold Italic" size="23.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="110.0" text="4" textFill="WHITE" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Monospaced Bold Italic" size="23.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="110.0" text="5" textFill="WHITE" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Monospaced Bold Italic" size="23.0" />
+               </font>
+            </Label>
+            <Label fx:id="top1" alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="420.0" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Monospaced Bold Italic" size="23.0" />
+               </font>
+            </Label>
+            <Label fx:id="top2" alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="421.0" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Monospaced Bold Italic" size="23.0" />
+               </font>
+            </Label>
+            <Label fx:id="top3" alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="422.0" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Monospaced Bold Italic" size="23.0" />
+               </font>
+            </Label>
+            <Label fx:id="top4" alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="421.0" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Monospaced Bold Italic" size="23.0" />
+               </font>
+            </Label>
+            <Label fx:id="top5" alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="431.0" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Monospaced Bold Italic" size="23.0" />
+               </font>
+            </Label>
+            <Label fx:id="top1Punt" alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="376.0" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Monospaced Bold Italic" size="23.0" />
+               </font>
+            </Label>
+            <Label fx:id="top2Punt" alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="376.0" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Monospaced Bold Italic" size="23.0" />
+               </font>
+            </Label>
+            <Label fx:id="top3Punt" alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="376.0" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Monospaced Bold Italic" size="23.0" />
+               </font>
+            </Label>
+            <Label fx:id="top4Punt" alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="376.0" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Monospaced Bold Italic" size="23.0" />
+               </font>
+            </Label>
+            <Label fx:id="top5Punt" alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="376.0" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Monospaced Bold Italic" size="23.0" />
+               </font>
+            </Label>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Edad" textAlignment="CENTER" wrappingWidth="110.13671875" GridPane.columnIndex="2">
+               <font>
+                  <Font name="Monospaced Bold" size="24.0" />
+               </font>
+            </Text>
+            <Label fx:id="top1Edad" alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="128.0" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Monospaced Bold Italic" size="23.0" />
+               </font>
+            </Label>
+            <Label fx:id="top2Edad" alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="128.0" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Monospaced Bold Italic" size="23.0" />
+               </font>
+            </Label>
+            <Label fx:id="top3Edad" alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="128.0" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Monospaced Bold Italic" size="23.0" />
+               </font>
+            </Label>
+            <Label fx:id="top4Edad" alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="128.0" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Monospaced Bold Italic" size="23.0" />
+               </font>
+            </Label>
+            <Label fx:id="top5Edad" alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="128.0" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Monospaced Bold Italic" size="23.0" />
+               </font>
+            </Label>
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </GridPane>
+      <ImageView fitHeight="101.0" fitWidth="108.0" layoutX="34.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../Recursos/logo5.png" />
          </image>

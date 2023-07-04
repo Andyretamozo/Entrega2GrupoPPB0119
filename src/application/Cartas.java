@@ -1,11 +1,9 @@
 package application;
 
-import java.lang.reflect.Field;
-
-import javafx.scene.Node;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+
 
 public class Cartas {
 	
@@ -13,7 +11,6 @@ public class Cartas {
 	    private int temp;
 	    private boolean vis;
 	    private boolean bloq;
-	    private int toFront;
 	    
 
 		public int getVal() {
@@ -43,30 +40,31 @@ public class Cartas {
 			this.bloq = bloq;
 		}
 		
-		public int getToFront() {
-			return toFront;
-		}
-		public void setToFront(int toFront) {
-			this.toFront = toFront;
-		}
 		
 
-			
+	//Creacion y propiedades del array		
 	public static Cartas [] carta =  new Cartas[8];
 	public void  crearCartas () {
 		
-        for (int i = 0; i < carta.length; i++) {
+        for (int i = 0; i < carta.length-4; i++) {
             carta[i] = new Cartas();
             carta[i].setVal(0);
             carta[i].setTemp(0);
             carta[i].setVis(false);
             carta[i].setBloq(false);
-            carta[i].setToFront(95);
+
         }
-        
-		
+        for (int i = 4; i < carta.length; i++) {
+            carta[i] = new Cartas();
+            carta[i].setVal(0);
+            carta[i].setTemp(0);
+            carta[i].setVis(false);
+            carta[i].setBloq(true);
+
+        }        		
 	}
 	
+	//Metodo para buscar la posicion de la carta superior seleccionada dentro del array
     public static int buscarCartaSuperior(int x) {
         for (int i = 0; i < carta.length; i++) {
             if (carta[i].getTemp() == x) {
@@ -76,40 +74,9 @@ public class Cartas {
         return 0; 
     }
     
+   
     
-    public static void desbCarta(int x) {
-        for (int i = 0; i < carta.length; i++) {
-            if (carta[i].getTemp() == x) { // Cambio en la condición de igualdad
-                carta[i].setBloq(false);
-
-            }
-        }
-    }
-    
-    public void obtenerTresVariables(int puntos) {
-    for (int x = puntos; x < Cartas.carta.length-1; x++) {
-        if (Cartas.carta[x].getTemp() == 0) {
-
-            String cartaVariableName2 = "ptoFil2Carta" + (x -2);
-            
-            int prue = Cartas.carta[x].getTemp();//prueba
-            System.out.println("valor temp : " + cartaVariableName2 +" es "+ + prue); //prueba
-            
-            try {
-                Field field2 = getClass().getDeclaredField(cartaVariableName2);
-                field2.setAccessible(true);
-                Node cartaNode2 = (Node) field2.get(this);
-                cartaNode2.setDisable(true);
-            } catch (NoSuchFieldException | IllegalAccessException ex) {
-                System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName2);
-                ex.printStackTrace();
-            }
-        }
-    }//fin for
-    
-    }
-    
-    
+    //Metodo para asignar el valor a los radioButton de cada carta
     public static void asignarValorRadCar(ToggleGroup grupo,String rad, int valor) {
         for (Toggle toggle : grupo.getToggles()) {
             if (toggle instanceof RadioButton &&((RadioButton) toggle).getId().equals(rad))  {
@@ -121,19 +88,70 @@ public class Cartas {
         }
     }
     
-    public static int obtenerValorRadCar(ToggleGroup grupo) {
-    int resul= 0;
-	Toggle selbtnsF1C = grupo.getSelectedToggle();
-	if (selbtnsF1C instanceof RadioButton) {
-	    RadioButton selRadBtn = (RadioButton) selbtnsF1C;
-	    String valorSeleccionado = selRadBtn.getText();
-	    resul= Integer.parseInt(valorSeleccionado);
-	    System.out.println("Valor seleccionado: " + valorSeleccionado);
-	}
-	return resul;
-    }
+    //Metodo bloquea los radioButton de la carta superior seleccionada 
+    public static void bloqRadCar(ToggleGroup grupo, String rad) {
+		for (Toggle selbtnsF1C : grupo.getToggles()) {
+			if (selbtnsF1C instanceof RadioButton &&((RadioButton) selbtnsF1C).getId().equals(rad)) {
+			    RadioButton selRadBtn = (RadioButton) selbtnsF1C;
+			    selRadBtn.setDisable(true);
+			    String valorSeleccionado = selRadBtn.getText();
+			    //resul= Integer.parseInt(valorSeleccionado);
+			    System.out.println("Valor seleccionado: " + valorSeleccionado);
+			}
+		}
+    } 
     
+    //Metodo desbloquea los radioButton si al seleccionar carta superior e inferior no coinciden
+    public static void desbloqRadCar(ToggleGroup grupo, String rad) {
+		for (Toggle selbtnsF1C : grupo.getToggles()) {
+			if (selbtnsF1C instanceof RadioButton &&((RadioButton) selbtnsF1C).getId().equals(rad)) {
+			    RadioButton selRadBtn = (RadioButton) selbtnsF1C;
+			    selRadBtn.setDisable(false);
+			    String valorSeleccionado = selRadBtn.getText();
+			    //resul= Integer.parseInt(valorSeleccionado);
+			    System.out.println("Valor seleccionado: " + valorSeleccionado);
+			}
+		}
+    }
+                     
+    //Metodo utilizado para obtener el dato o valor de los radioButton
+    public static int obtenerValorRadCar(ToggleGroup grupo) {
+	    int resul= 0;
+			Toggle selbtnsF1C = grupo.getSelectedToggle();
+			if (selbtnsF1C instanceof RadioButton) {
+			    RadioButton selRadBtn = (RadioButton) selbtnsF1C;
+			    String valorSeleccionado = selRadBtn.getText();
+			    resul= Integer.parseInt(valorSeleccionado);
+			    System.out.println("Valor seleccionado: " + valorSeleccionado);
+			}
+		return resul;
+    } 
+    
+    /*
+    //Metodo bloquea las cartas diferentes a la seleccionada
+    public void bloqCarSup(int valTemp) {
+	//Se bloquean cartas diferentes a actual
+    for ( int i = 0; i < Cartas.carta.length-4; i++) {
+        if (Cartas.carta[i].getTemp() == valTemp) {
 
+            String cartaVariableName = "ptoFil1Carta" + (i + 1);
+            
+            int prue = Cartas.carta[i].getTemp();//prueba
+            System.out.println("valor cartas a bloquear select fila 1 : " + cartaVariableName +" es "+ + prue); //prueba
+            
+            try {
+                Field field = getClass().getDeclaredField(cartaVariableName);
+                field.setAccessible(true);
+                Node cartaNode = (Node) field.get(this);
+                cartaNode.setDisable(true);
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                System.out.println("No se pudo acceder al campo especificado: " + cartaVariableName);
+                e.printStackTrace();
+            }
+        }
+    }//fin for
+    
+    }*/
 
 
 }

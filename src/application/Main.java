@@ -10,7 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 /*
- * Somo Poli
+ * Somos Poli
  */
 
 public class Main extends Application {

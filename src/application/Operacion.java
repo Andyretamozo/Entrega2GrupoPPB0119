@@ -4,18 +4,58 @@ import java.util.Random;
 
 public class Operacion {
 	
+	
+	//Se crea array para crear elementos de las operaciones nivel1 edad<9
     public static int[] suma() {
         Random random = new Random();
-        int num1 = random.nextInt(6) + 4;  // Genera un número aleatorio entre 1 y 9
+        int num1 = random.nextInt(5) + 4;  // Genera un número aleatorio entre 1 y 9
         int num2 = random.nextInt(4) + 1;  // Genera un número aleatorio entre 1 y 9
-		int num3 = random.nextInt(5) + num1 + 1;
-		int num4 = random.nextInt(3) + num2 + 1;
+		int num3 = random.nextInt(3) + num1 + 1;
+		int num4 = random.nextInt(4) + num2 + 1;
         int num5 = num1 + num2;
         if (num3==num5) {
         	num3+=1;
         	}
-        if (num4==num3) {
-        	num4+=1;
+        if (num4==num5) {
+        	num4+=2;
+        	}
+        
+        int[] numeros = {num1, num2, num3, num4, num5};
+        return numeros;
+    }
+    
+	//Se crea array para crear elementos de las operaciones nivel1 edad<9
+    public static int[] sumaN2() {
+        Random random = new Random();
+        int num1 = random.nextInt(15) + 4; 
+        int num2 = random.nextInt(13) + 1;
+		int num3 = random.nextInt(8) + num1 + 1;
+		int num4 = random.nextInt(7) + num2 + 1;
+        int num5 = num1 + num2;
+        if (num3==num5) {
+        	num3+=1;
+        	}
+        if (num4==num5) {
+        	num4+=2;
+        	}
+        
+        int[] numeros = {num1, num2, num3, num4, num5};
+        return numeros;
+    }
+    
+  //Se crea array para crear elementos de las operaciones nivel1 edad<9
+    public static int[] RestaN3() {
+        Random random = new Random();
+        int num1 = random.nextInt(10) + 5; 
+        int num2 = random.nextInt(4) + 1;
+		int num3 = random.nextInt(8) + num1 + 1;
+		int num4 = random.nextInt(7) + num2 + 1;
+        int num5 = num1 - num2;
+        if (num3==num5) {
+        	num3+=1;
+        	}
+        if (num4==num5) {
+        	num4+=2;
         	}
         
         int[] numeros = {num1, num2, num3, num4, num5};
